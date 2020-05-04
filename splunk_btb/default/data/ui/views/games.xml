@@ -1,0 +1,154 @@
+<form>
+  <label>games</label>
+  <search id="base_stats_search">
+    <query>`base_stats_search_args(1,2.5,10,5.5,4.39,1.26,1,1,1.83,1)` | fields *</query>
+    <earliest>1</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <fieldset submitButton="false">
+    <input type="dropdown" token="div" searchWhenChanged="true">
+      <label>Division:</label>
+      <choice value="*">All Leagues</choice>
+      <choice value="E0">England - Premiership</choice>
+      <choice value="E1">England - Championship</choice>
+      <choice value="E2">England - League 1</choice>
+      <choice value="E3">England - League 2</choice>
+      <choice value="EC">England - Conference</choice>
+      <choice value="SC0">Scotland - Premiership</choice>
+      <choice value="SC1">Scotland - Championship</choice>
+      <choice value="SC2">Scotland - League 1</choice>
+      <choice value="SC3">Scotland - League 2</choice>
+      <choice value="F1">France - Ligue 1</choice>
+      <choice value="F2">France - Ligue 2</choice>
+      <choice value="D1">Germany - Bundesliga 1</choice>
+      <choice value="D2">Germany - Bundesliga 2</choice>
+      <choice value="SP1">Spain - League 1</choice>
+      <choice value="SP2">Spain - League 2</choice>
+      <choice value="I1">Italy - Serie A</choice>
+      <choice value="I2">Italy - Serie B</choice>
+      <choice value="N1">Netherlands - Eredivisie</choice>
+      <choice value="B1">Belgium - First Division</choice>
+      <choice value="P1">Portugal - Primeira League</choice>
+      <choice value="T1">Turkey - Super Lig</choice>
+      <choice value="G1">Greece - League 1</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+  </fieldset>
+  <row depends="$debug$">
+    <panel>
+      <html>
+        <h1>Debug</h1>
+        <p>$div$</p>
+      </html>
+    </panel>
+  </row>
+  <row depends="$debug$">
+    <panel>
+      <table>
+        <search base="base_stats_search">
+          <query>| table *</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <h1>Games by Division</h1>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Home Breakdown</title>
+        <search base="base_stats_search">
+          <query>| `games_by_div` | search Div=$div$ | fields - *away* *draw* | sort - percent_profit_home_wins</query>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Away Breakdown</title>
+        <search base="base_stats_search">
+          <query>| `games_by_div` | search Div=$div$ | fields - *home* *draw* | sort - percent_profit_away_wins</query>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Draw Breakdown</title>
+        <search base="base_stats_search">
+          <query>| `games_by_div` | search Div=$div$ | fields - *home* *away* | sort - percent_profit_draws</query>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <h1>Home Stats by Team</h1>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <input type="dropdown" token="games_home_team" searchWhenChanged="true">
+        <label>Home Team</label>
+        <fieldForLabel>HomeTeam</fieldForLabel>
+        <fieldForValue>HomeTeam</fieldForValue>
+        <search base="base_stats_search">
+          <query>| `games_by_home_team` | table *</query>
+        </search>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+      </input>
+      <table>
+        <title>Games by Home Team</title>
+        <search>
+          <query>`base_stats_search_args(1,2.5,1,1,1.20,4.5,1,1,1.83,1)` | `games_by_home_team` | search HomeTeam="$games_home_team$"</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <h1>Away Stats by Team</h1>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <input type="dropdown" token="games_away_team" searchWhenChanged="true">
+        <label>Away Team</label>
+        <fieldForLabel>AwayTeam</fieldForLabel>
+        <fieldForValue>AwayTeam</fieldForValue>
+        <search base="base_stats_search">
+          <query>| `games_by_away_team` | table *</query>
+        </search>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+      </input>
+      <table>
+        <title>Games by Away Team</title>
+        <search>
+          <query>`base_stats_search_args(1,2.5,1,1,1.20,4.5,1,1,1.83,1)` | `games_by_away_team` | search AwayTeam="$games_away_team$"</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+</form>

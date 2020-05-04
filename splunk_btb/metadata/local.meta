@@ -1,0 +1,193 @@
+[app/ui]
+version = 8.0.0
+modtime = 1588589174.260940000
+
+[app/launcher]
+version = 8.0.0
+modtime = 1588589174.261574000
+
+[lookups/german_b1_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591688.538293000
+
+[lookups/turkey_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591692.275185000
+
+[lookups/german_b2_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591695.881104000
+
+[lookups/greece_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591698.949843000
+
+[lookups/italian_sa_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591701.818382000
+
+[lookups/italian_sb_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591705.519040000
+
+[lookups/portugal_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591709.522694000
+
+[lookups/scotland_champ_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591716.624031000
+
+[lookups/scotland_l2_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591720.675374000
+
+[lookups/scotland_l1_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591725.022562000
+
+[lookups/scotland_prem_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591729.677806000
+
+[lookups/spanish_l1_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591733.693207000
+
+[lookups/spanish_l2_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591737.733721000
+
+[lookups/french_l2_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591741.230210000
+
+[lookups/french_l1_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591744.639657000
+
+[lookups/fixtures_T1.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591748.321636000
+
+[lookups/fixtures_EC.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591752.850470000
+
+[lookups/fixtures_D2.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591756.413062000
+
+[lookups/fixtures_D1.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591759.925791000
+
+[lookups/england_prem_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591766.018384000
+
+[lookups/england_l2_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591769.951548000
+
+[lookups/england_l1_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591775.712190000
+
+[lookups/england_conference_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591782.498383000
+
+[lookups/england_champ_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591786.044192000
+
+[lookups/dutch_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591789.227326000
+
+[lookups/belgium_teams.csv]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.0
+modtime = 1588591793.388140000
+
+[views/auto_h2h]
+version = 8.0.0
+modtime = 1588592447.603043000

@@ -1,0 +1,209 @@
+<form>
+  <label>corners</label>
+  <search id="base_stats_search">
+    <query>`base_stats_search_args(1,2.5,10,5.5,4.39,1.26,1,1,1.83,1)` | fields *</query>
+    <earliest>1</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <fieldset submitButton="false">
+    <input type="dropdown" token="div" searchWhenChanged="true">
+      <label>Division:</label>
+      <choice value="*">All Leagues</choice>
+      <choice value="E0">England - Premiership</choice>
+      <choice value="E1">England - Championship</choice>
+      <choice value="E2">England - League 1</choice>
+      <choice value="E3">England - League 2</choice>
+      <choice value="EC">England - Conference</choice>
+      <choice value="SC0">Scotland - Premiership</choice>
+      <choice value="SC1">Scotland - Championship</choice>
+      <choice value="SC2">Scotland - League 1</choice>
+      <choice value="SC3">Scotland - League 2</choice>
+      <choice value="F1">France - Ligue 1</choice>
+      <choice value="F2">France - Ligue 2</choice>
+      <choice value="D1">Germany - Bundesliga 1</choice>
+      <choice value="D2">Germany - Bundesliga 2</choice>
+      <choice value="SP1">Spain - League 1</choice>
+      <choice value="SP2">Spain - League 2</choice>
+      <choice value="I1">Italy - Serie A</choice>
+      <choice value="I2">Italy - Serie B</choice>
+      <choice value="N1">Netherlands - Eredivisie</choice>
+      <choice value="B1">Belgium - First Division</choice>
+      <choice value="P1">Portugal - Primeira League</choice>
+      <choice value="T1">Turkey - Super Lig</choice>
+      <choice value="G1">Greece - League 1</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+  </fieldset>
+  <row depends="$debug$">
+    <panel>
+      <html>
+        <h1>Debug</h1>
+        <p>$div$</p>
+      </html>
+    </panel>
+  </row>
+  <row depends="$debug$">
+    <panel>
+      <table>
+        <search base="base_stats_search">
+          <query>| table *</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <h1>Corners by Division</h1>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Corners - Over/Under 10</title>
+        <search base="base_stats_search">
+          <query>| fields * |  `corners_by_div(1)` | search Div="$div$" | fields Div, games, corners_equal, corners_more, corners_less | eval percent_games_more = round((corners_more / games) * 100,2) , percent_games_less = round((corners_less / games) * 100,2), percent_games_equal = round((corners_equal / games) * 100,2) | sort - percent_games_more</query>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Alternative Corners</title>
+      <input type="dropdown" token="div2" searchWhenChanged="true">
+        <label>Division:</label>
+        <choice value="*">All Divisions</choice>
+        <choice value="E0">England - Premiership</choice>
+        <choice value="E1">England - Championship</choice>
+        <choice value="E2">England - League 1</choice>
+        <choice value="E3">England - League 2</choice>
+        <choice value="EC">England - Conference</choice>
+        <choice value="SC0">Scotland - Premiership</choice>
+        <choice value="SC1">Scotland - Championship</choice>
+        <choice value="SC2">Scotland - League 1</choice>
+        <choice value="SC3">Scotland - League 2</choice>
+        <choice value="F1">France - Ligue 1</choice>
+        <choice value="F2">France - Ligue 2</choice>
+        <choice value="D1">Germany - Bundesliga 1</choice>
+        <choice value="D2">Germany - Bundesliga 2</choice>
+        <choice value="SP1">Spain - League 1</choice>
+        <choice value="SP2">Spain - League 2</choice>
+        <choice value="I1">Italy - Serie A</choice>
+        <choice value="I2">Italy - Serie B</choice>
+        <choice value="N1">Netherlands - Eredivsie</choice>
+        <choice value="B1">Belgium - First Division</choice>
+        <choice value="P1">Portugal - Primeira League</choice>
+        <choice value="T1">Turkey - Super Lig</choice>
+        <choice value="G1">Greece - League 1</choice>
+      </input>
+      <input type="dropdown" token="corners" searchWhenChanged="true">
+        <label>corners</label>
+        <choice value="8">8</choice>
+        <choice value="9">9</choice>
+      </input>
+      <input type="text" token="gt_odds" searchWhenChanged="true">
+        <label>Greater Than Odds</label>
+      </input>
+      <input type="text" token="lt_odds">
+        <label>Less Than Odds</label>
+      </input>
+      <html>
+        <h3>9 corners</h3>
+
+<div style="float: left; width: 33%;">
+<ul>
+<p>England - Premiership - gt: lt:</p>
+</ul>
+</div>
+<div style="float: left; width: 33%;">
+<ul>
+<li>Middle Item 1</li>
+<li>Middle Item 2</li>
+<li>Middle Item 3</li>
+<li>Middle Item 4</li>
+<li>Middle Item 5</li>
+</ul>
+</div>
+<div style="float: right; width: 33%;">
+<ul>
+<li>Right Item 1</li>
+<li>Right Item 2</li>
+<li>Right Item 3</li>
+<li>Right Item 4</li>
+<li>Right Item 5</li>
+</ul>
+</div>
+      </html>
+      <table>
+        <search>
+          <query>`base_stats_search_args(1,2.5,$corners$,1,1,1,$lt_odds$,$gt_odds$,1,1)` | `corners_by_div(1)` | search Div=$div2$ | table Div, games, corners_equal, corners_less, corners_more, profit*, percent*</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <h1>Corners by Team</h1>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <input type="dropdown" token="corners_home_team" searchWhenChanged="true">
+        <label>Home Team</label>
+        <fieldForLabel>HomeTeam</fieldForLabel>
+        <fieldForValue>HomeTeam</fieldForValue>
+        <search base="base_stats_search">
+          <query>| `corners_by_home_team(1)` | table *</query>
+        </search>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+      </input>
+      <input type="text" token="team_home_corners" searchWhenChanged="true">
+        <label>Corners</label>
+      </input>
+      <table>
+        <title>Corners by Home Team</title>
+        <search>
+          <query>`base_stats_search_args(1,2.5,$team_home_corners$,4.5,1.20,4.5,1,1,1.83,1)` | `corners_by_home_team(1)` | search HomeTeam="$corners_home_team$" | fields - *percent*, *profit*, *return*, stake | eval percent_games_more = round((corners_more / games) * 100,2) , percent_games_less = round((corners_less / games) * 100,2), percent_games_equal = round((corners_equal / games) * 100,2), avg_corners=round(avg_corners,2)</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <input type="dropdown" token="corners_away_team" searchWhenChanged="true">
+        <label>Away Team</label>
+        <fieldForLabel>AwayTeam</fieldForLabel>
+        <fieldForValue>AwayTeam</fieldForValue>
+        <search base="base_stats_search">
+          <query>| `corners_by_away_team(1)` | table *</query>
+        </search>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+      </input>
+      <input type="text" token="team_away_corners" searchWhenChanged="true">
+        <label>Corners</label>
+      </input>
+      <table>
+        <title>Corners by Away Team</title>
+        <search>
+          <query>`base_stats_search_args(1,2.5,$team_away_corners$,4.5,1.20,4.5,1,1,1.83,1)` | `corners_by_away_team(1)` | search AwayTeam="$corners_away_team$" | fields - *percent*, *profit*, *return*, stake | eval percent_games_more = round((corners_more / games) * 100,2) , percent_games_less = round((corners_less / games) * 100,2), percent_games_equal = round((corners_equal / games) * 100,2), avg_corners=round(avg_corners,2)</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+</form>

@@ -1,0 +1,388 @@
+<form>
+  <label>Footie</label>
+  <search id="base_stats_search">
+    <query>|inputlookup $div$ 
+|  table team 
+|  map 
+    [search index=football_19_20 (AwayTeam=$$team$$ OR HomeTeam=$$team$$) | eval team="$$team$$" ] maxsearches=100
+| eval Home_Points=if((HomeTeam==team) AND (FTR=="H"),3,0), Away_Points=if((AwayTeam==team) AND (FTR=="A"),3,0), Draw_Points=if(FTR=="D",1,0), Points_Total=Home_Points+Away_Points+Draw_Points, Full_Time_Home_Team_Goals=if(HomeTeam==team,FTHG,""), Full_Time_Away_Team_Goals=if(AwayTeam==team,FTAG,""), Half_Time_Home_Team_Goals=if(HomeTeam==team,HTHG,""), Half_Time_Away_Team_Goals=if(AwayTeam==team,HTAG,""), Half_Time_Result=case(HTR="A",if(AwayTeam==team,"W","L"),HTR="H",if(HomeTeam==team,"W","L"),HTR="D","D",1=1,"NA"), Full_Time_Result=case(FTR="A",if(AwayTeam==team,"W","L"),FTR="H",if(HomeTeam==team,"W","L"),FTR="D","D",1=1,"NA"), Home_Team_Shots=if(HomeTeam==team,HS,""), Away_Team_Shots=if(AwayTeam==team,AS,""), Home_Team_Shots_On_Target=if(HomeTeam==team,HST,""), Away_Team_Shots_On_Target=if(AwayTeam==team,AST,""), Away_Team_Shots=if(AwayTeam==team,AS,""), Home_Team_Hit_Woodwork=if(HomeTeam==team,HHW,""), Away_Team_Hit_Woodwork=if(AwayTeam==team,AHW,""), Home_Team_Corners=if(HomeTeam==team,HC,""), Away_Team_Corners=if(AwayTeam==team,AC,""), Home_Team_Fouls_Committed=if(HomeTeam==team,HF,""), Away_Team_Fouls_Committed=if(AwayTeam==team,AF,""), Home_Team_Freekicks_Conceded=if(HomeTeam==team,HFKC,""), Away_Team_Freekicks_Conceded=if(AwayTeam==team,AFKC,""), Home_Team_Offsides=if(HomeTeam==team,HO,""), Away_Team_Offsides=if(AwayTeam==team,AO,""), Home_Team_Yellow_Cards=if(HomeTeam==team,HY,""), Away_Team_Yellow_Cards=if(AwayTeam==team,AY,""), Home_Team_Red_Cards=if(HomeTeam==team,HR,""), Away_Team_Red_Cards=if(AwayTeam==team,AR,""), Home_Team_Bookings_Points=if(HomeTeam==team,HBP,""), Away_Team_Bookings_Points=if(AwayTeam==team,ABP,"")
+| table team, HomeTeam, AwayTeam, Referee, FTHG, Full_Time_Home_Team_Goals, FTAG, Full_Time_Away_Team_Goals, HTHG, Half_Time_Home_Team_Goals, HTAG, Half_Time_Away_Team_Goals, HTR, Half_Time_Result, FTR, Full_Time_Result, Home_Points, Away_Points, Draw_Points, Points_Total, Home_Team_Shots, Away_Team_Shots, Home_Team_Shots_On_Target, Away_Team_Shots_On_Target, Home_Team_Hit_Woodwork, Away_Team_Hit_Woodwork, Home_Team_Corners, Away_Team_Corners, Home_Team_Fouls_Committed, Away_Team_Fouls_Committed, Home_Team_Freekicks_Conceded, Away_Team_Freekicks_Conceded, Home_Team_Offsides, Away_Team_Offsides, Home_Team_Yellow_Cards, Away_Team_Yellow_Cards, Home_Team_Red_Cards, Away_Team_Red_Cards, Home_Team_Bookings_Points, Away_Team_Bookings_Points</query>
+    <earliest>1</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search id="base_ref_search">
+    <query>index=football_19_20 | table *</query>
+    <earliest>1</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <fieldset submitButton="false">
+    <input type="dropdown" token="div" searchWhenChanged="true">
+      <label>Division:</label>
+      <choice value="england_prem_teams.csv">England - Premiership</choice>
+      <choice value="england_champ_teams.csv">England - Championship</choice>
+      <choice value="england_l1_teams.csv">England - League 1</choice>
+      <choice value="england_l2_teams.csv">England - League 2</choice>
+      <choice value="england_conference_teams.csv">England - Conference</choice>
+      <choice value="scotland_prem_teams.csv">Scotland - Premiership</choice>
+      <choice value="scotland_champ_teams.csv">Scotland - Championship</choice>
+      <choice value="scotland_l1_teams.csv">Scotland - League 1</choice>
+      <choice value="scotland_l2_teams.csv">Scotland - League 2</choice>
+      <choice value="french_l1_teams.csv">France - Ligue 1</choice>
+      <choice value="french_l2_teams.csv">France - Ligue 2</choice>
+      <choice value="german_b1_teams.csv">Germany - Bundesliga 1</choice>
+      <choice value="german_b2_teams.csv">Germany - Bundesliga 2</choice>
+      <choice value="spanish_l1_teams.csv">Spain - League 1</choice>
+      <choice value="spanish_l2_teams.csv">Spain - League 2</choice>
+      <choice value="italian_sa_teams.csv">Italy - Serie A</choice>
+      <choice value="italian_sb_teams.csv">Italy - Serie B</choice>
+      <choice value="dutch_teams.csv">Netherlands - Eredivisie</choice>
+      <choice value="belgium_teams.csv">Belgium - First Division</choice>
+      <choice value="portugal_teams.csv">Portugal - Primeira League</choice>
+      <choice value="turkey_teams.csv">Turkey - Super Lig</choice>
+      <choice value="greece_teams.csv">Greece - League 1</choice>
+      <change>
+        <condition value="england_prem_teams.csv">
+          <set token="division">E0</set>
+        </condition>
+        <condition value="england_champ_teams.csv">
+          <set token="division">E1</set>
+        </condition>
+        <condition value="england_l1_teams.csv">
+          <set token="division">E2</set>
+        </condition>
+        <condition value="england_l2_teams.csv">
+          <set token="division">E2</set>
+        </condition>
+        <condition value="england_conference_teams.csv">
+          <set token="division">EC</set>
+        </condition>
+        <condition value="french_l1_teams.csv">
+          <set token="division">F1</set>
+        </condition>
+        <condition value="french_l2_teams.csv">
+          <set token="division">F2</set>
+        </condition>
+        <condition value="german_b1_teams.csv">
+          <set token="division">D1</set>
+        </condition>
+        <condition value="german_b2_teams.csv">
+          <set token="division">D2</set>
+        </condition>
+        <condition value="scotland_prem_teams.csv">
+          <set token="division">SC0</set>
+        </condition>
+        <condition value="scotland_champ_teams.csv">
+          <set token="division">SC1</set>
+        </condition>
+        <condition value="scotland_l1_teams.csv">
+          <set token="division">SC2</set>
+        </condition>
+        <condition value="scotland_l2_teams.csv">
+          <set token="division">SC3</set>
+        </condition>
+        <condition value="spanish_l1_teams.csv">
+          <set token="division">SP1</set>
+        </condition>
+        <condition value="spanish_l2_teams.csv">
+          <set token="division">SP2</set>
+        </condition>
+        <condition value="italian_sa_teams.csv">
+          <set token="division">I1</set>
+        </condition>
+        <condition value="italian_sb_teams.csv">
+          <set token="division">I2</set>
+        </condition>
+        <condition value="dutch_teams.csv">
+          <set token="division">N1</set>
+        </condition>
+        <condition value="belgium_teams.csv">
+          <set token="division">B1</set>
+        </condition> 
+        <condition value="portugal_teams.csv">
+          <set token="division">P1</set>
+        </condition> 
+        <condition value="turkey_teams.csv">
+          <set token="division">T1</set>
+        </condition> 
+        <condition value="greece_teams.csv">
+          <set token="division">G1</set>
+        </condition>            
+      </change>
+      <initialValue>england_prem_teams.csv</initialValue>
+    </input>
+  </fieldset>
+  <row depends="$debug$">
+    <panel>
+      <html>
+        <h1>Debug</h1>
+        <p>$div$</p>
+        <p>$division$</p>
+      </html>
+    </panel>
+  </row>
+  <row depends="$debug$">
+    <panel>
+      <table>
+        <search base="base_stats_search">
+          <query>| table *</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Average Home Team Goals</title>
+      <single>
+        <search base="base_stats_search">
+          <query>| stats avg(Full_Time_Home_Team_Goals)</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Average Away Team Goals</title>
+      <single>
+        <search base="base_stats_search">
+          <query>| stats avg(Full_Time_Away_Team_Goals)</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+      </single>
+    </panel>
+    <panel>
+      <title>BTTS Stats</title>
+      <table>
+        <search base="base_ref_search">
+          <query>| search Div=$division$ | eval home_score=if(FTHG>0,"yes","no"), away_score=if(FTAG>0,"yes","no") | eval BTTS=if(home_score=="yes" AND away_score=="yes",1,0), NO_BTTS=if(home_score!="yes" OR away_score!="yes",1,0) | stats count as games, sum(BTTS) as BTTS_YES, sum(NO_BTTS) as BTTS_NO by Div</query>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Goals</title>
+      <table>
+        <search base="base_stats_search">
+          <query>|stats sum(Full_Time_Home_Team_Goals) as Home_Goals sum(Full_Time_Away_Team_Goals) as Away_Goals by team</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Average Goals - Home</title>
+      <table>
+        <search base="base_stats_search">
+          <query>|stats avg(Full_Time_Home_Team_Goals) as Home_Goals by team | eval Home_Goals=round(Home_Goals,1) | sort - Home_Goals</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Average Goals - Away</title>
+      <table>
+        <search base="base_stats_search">
+          <query>|stats avg(Full_Time_Away_Team_Goals) as Away_Goals by team | eval Away_Goals=round(Away_Goals,1)| sort - Away_Goals</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Average Home Team Corners</title>
+      <single>
+        <search base="base_stats_search">
+          <query>| stats avg(Home_Team_Corners)</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Average Away Team Corners</title>
+      <single>
+        <search base="base_stats_search">
+          <query>| stats avg(Away_Team_Corners)</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Corners</title>
+      <table>
+        <search base="base_stats_search">
+          <query>|stats sum(Home_Team_Corners) as Home_Corners sum(Away_Team_Corners) as Away_Corners by team</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Average Corners - Home</title>
+      <table>
+        <search base="base_stats_search">
+          <query>|stats avg(Home_Team_Corners) as Home_Corners by team | eval Home_Corners=round(Home_Corners,1) | sort - Home_Corners</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Average Corners - Away</title>
+      <table>
+        <search base="base_stats_search">
+          <query>|stats avg(Away_Team_Corners) as Away_Corners by team | eval Away_Corners=round(Away_Corners,1)| sort - Away_Corners</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Average Home Team Yellows</title>
+      <single>
+        <search base="base_stats_search">
+          <query>| stats avg(Home_Team_Yellow_Cards)</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Average Away Team Yellows</title>
+      <single>
+        <search base="base_stats_search">
+          <query>| stats avg(Away_Team_Yellow_Cards)</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Average Home Team Reds</title>
+      <single>
+        <search base="base_stats_search">
+          <query>| stats avg(Home_Team_Red_Cards)</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Average Away Team Reds</title>
+      <single>
+        <search base="base_stats_search">
+          <query>| stats avg(Away_Team_Red_Cards)</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Average Cards - Home</title>
+      <table>
+        <search base="base_stats_search">
+          <query>|stats avg(Home_Team_Yellow_Cards) as Home_Yellows avg(Home_Team_Red_Cards) as Home_Reds by team | eval Home_Yellows=round(Home_Yellows,1), Home_Reds=round(Home_Reds,1)</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Average Cards - Away</title>
+      <table>
+        <search base="base_stats_search">
+          <query>|stats avg(Away_Team_Yellow_Cards) as Away_Yellows avg(Away_Team_Red_Cards) as Away_Reds by team | eval Away_Yellows=round(Away_Yellows,1), Away_Reds=round(Away_Reds,1)</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Average Home Team Fouls Committed</title>
+      <single>
+        <search base="base_stats_search">
+          <query>| stats avg(Home_Team_Fouls_Committed)</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Average Away Team Fouls Committed</title>
+      <single>
+        <search base="base_stats_search">
+          <query>| stats avg(Away_Team_Fouls_Committed)</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Fouls</title>
+      <table>
+        <search base="base_stats_search">
+          <query>|stats sum(Home_Team_Fouls_Committed) as Home_Fouls sum(Away_Team_Fouls_Committed) as Away_Fouls by team</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Average Fouls - Home</title>
+      <table>
+        <search base="base_stats_search">
+          <query>|stats avg(Home_Team_Fouls_Committed) as Home_Fouls by team | eval Home_Fouls=round(Home_Fouls,1) | sort - Home_Fouls</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Average Fouls - Away</title>
+      <table>
+        <search base="base_stats_search">
+          <query>|stats avg(Away_Team_Fouls_Committed) as Away_Fouls by team | eval Away_Fouls=round(Away_Fouls,1) | sort - Away_Fouls</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Referees Average Cards - Home</title>
+      <table>
+        <search base="base_ref_search">
+          <query>| search Div=$division$ | stats count as Games avg(HY) as Avg_Home_Yellows min(HY) as Min_Home_Yellows max(HY) as Max_Home_Yellows avg(HR) as Avg_Home_Reds min(HR) as Min_Home_Reds max(HR) as Max_Home_Reds by Referee |  eval Avg_Home_Yellows=round(Avg_Home_Yellows,1), Min_Home_Yellows=round(Min_Home_Yellows,1), Max_Home_Yellows=round(Max_Home_Yellows,1), Avg_Home_Reds=round(Avg_Home_Reds,1), Min_Home_Reds=round(Min_Home_Reds,1), Max_Home_Reds=round(Max_Home_Reds,1) | sort - Avg_Home_Yellows, Avg_Home_reds</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Referees Average Cards - Away</title>
+      <table>
+        <search base="base_ref_search">
+          <query>| search Div=$division$| stats count as Games avg(AY) as Avg_Away_Yellows min(AY) as Min_Away_Yellows max(AY) as Max_Away_Yellows avg(AR) as Avg_Away_Reds min(AR) as Min_Away_Reds max(AR) as Max_Away_Reds by Referee |  eval Avg_Away_Yellows=round(Avg_Away_Yellows,1), Min_Away_Yellows=round(Min_Away_Yellows,1), Max_Away_Yellows=round(Max_Away_Yellows,1), Avg_Away_Reds=round(Avg_Away_Reds,1), Min_Away_Reds=round(Min_Away_Reds,1), Max_Away_Reds=round(Max_Away_Reds,1) | sort - Avg_Away_Yellows, Avg_Away_Reds</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row depends="$debug$">
+    <panel>
+      <table>
+        <search base="base_ref_search">
+          <query>| table *</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+</form>

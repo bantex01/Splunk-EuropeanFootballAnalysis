@@ -1,0 +1,376 @@
+<form>
+  <label>head2head</label>
+  <search id="charts_search">
+    <query>
+      index=football_19_20 (HomeTeam="$home_team$" OR AwayTeam="$away_team$") | fields *
+    </query>
+  </search>
+  <search id="base_stats_search">
+    <query>`base_stats_search_args(1,2.5,10,5.5,4.39,1.26,1,1,1.83,1)` | fields *</query>
+    <earliest>1</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search id="base_h2h_search">
+    <query>index=football_19_20 HomeTeam="$home_team$" | eval under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR) | stats avg(cards_total) as avg_cards, avg(HC) as avg_corners, avg(FTHG) as avg_goals, count as games, sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 by HomeTeam | rename HomeTeam as Team | append [search index=football_19_20 AwayTeam="$away_team$" | eval under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(AY+AR) | stats avg(cards_total) as avg_cards, avg(AC) as avg_corners, avg(FTAG) as avg_goals, count as games, sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 by AwayTeam | rename AwayTeam as Team] | eval percent_under_2_5_goals = (under_2_5_goals / games) * 100, percent_over_2_5_goals = (over_2_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100</query>
+    <earliest>1</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <fieldset submitButton="false"></fieldset>
+  <row depends="$debug$">
+    <panel>
+      <table>
+        <search base="base_stats_search">
+          <query>| search HomeTeam="$home_team$" | fields *</query>
+        </search>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <search base="base_stats_search">
+          <query>| search AwayTeam="$away_team$" | fields *</query>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <h1>Head to Head - Bet Analysis</h1>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <input type="dropdown" searchWhenChanged="true" token="home_team">
+        <label>Home Team</label>
+        <fieldForLabel>HomeTeam</fieldForLabel>
+        <fieldForValue>HomeTeam</fieldForValue>
+        <search base="base_stats_search">
+          <query>| dedup HomeTeam | fields HomeTeam | table *</query>
+        </search>
+        <default>Liverpool</default>
+        <initialValue>Liverpool</initialValue>
+      </input>
+      <input type="dropdown" searchWhenChanged="true" token="away_team">
+        <label>Away Team</label>
+        <fieldForLabel>AwayTeam</fieldForLabel>
+        <fieldForValue>AwayTeam</fieldForValue>
+        <search base="base_stats_search">
+          <query>| dedup AwayTeam | fields AwayTeam | table *</query>
+        </search>
+        <default>Man United</default>
+        <initialValue>Man United</initialValue>
+      </input>
+      <table>
+        <title>Previous Fixture(s)</title>
+        <search base="base_stats_search">
+          <query>
+          | search (HomeTeam="$home_team$" OR HomeTeam="$away_team$") AND (AwayTeam="$home_team$" OR AwayTeam="$away_team$") | table Date, HomeTeam, AwayTeam, FTHG, FTAG, CORNERS, CARDS_BET_TOTAL_CARDS | rename FTHG as "Home Goals", FTAG as "Away Goals", CORNERS as Corners, CARDS_BET_TOTAL_CARDS as "Total Cards"
+        </query>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <h1>Compund Average Percentages</h1>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Goals</title>
+        <search base="base_h2h_search">
+          <query>| stats avg(percent_under_2_5_goals) as avg_goals_under_2_5, avg(percent_over_2_5_goals) as avg_goals_over_2_5 | eval avg_goals_under_2_5=round(avg_goals_under_2_5,2), avg_goals_over_2_5=round(avg_goals_over_2_5,2)</query>
+        </search>
+        <format type="color" field="avg_goals_under_2_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_goals_over_2_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>BTTS</title>
+        <search base="base_h2h_search">
+          <query>| stats avg(percent_btts_no) as avg_btts_no, avg(percent_btts_yes) as avg_btts_yes | eval avg_btts_no=round(avg_btts_no,2), avg_btts_yes=round(avg_btts_yes,2)</query>
+        </search>
+        <format type="color" field="avg_btts_no">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_btts_yes">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Cards</title>
+        <search base="base_h2h_search">
+          <query>| stats avg(percent_cards_over_3_5) as avg_cards_over_3_5, avg(percent_cards_under_3_5) as avg_cards_under_3_5, avg(percent_cards_over_4_5) as avg_cards_over_4_5, avg(percent_cards_under_4_5) as avg_cards_under_4_5, avg(percent_cards_over_5_5) as avg_cards_over_5_5, avg(percent_cards_under_5_5) as avg_cards_under_5_5 | eval avg_cards_over_3_5=round(avg_cards_over_3_5,2), avg_cards_under_3_5=round(avg_cards_under_3_5,2), avg_cards_over_4_5=round(avg_cards_over_4_5,2), avg_cards_under_4_5=round(avg_cards_under_4_5,2), avg_cards_over_5_5=round(avg_cards_over_5_5,2), avg_cards_under_5_5=round(avg_cards_under_5_5,2)</query>
+        </search>
+        <format type="color" field="avg_cards_under_5_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_cards_over_5_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_cards_under_4_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_cards_over_4_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_cards_under_3_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_cards_over_3_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Corners</title>
+        <search base="base_h2h_search">
+          <query>| stats avg(percent_corners_over_8) as avg_corners_over_8, avg(percent_corners_over_9) as avg_corners_over_9, avg(percent_corners_over_10) as avg_corners_over_10 | eval avg_corners_over_8=round(avg_corners_over_8,2), avg_corners_over_9=round(avg_corners_over_9,2), avg_corners_over_10=round(avg_corners_over_10,2)</query>
+        </search>
+        <format type="color" field="avg_corners_over_8">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_corners_over_9">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_corners_over_10">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Statistics - $home_team$ v $away_team$</title>
+        <search base="base_h2h_search">
+          <query>| table * | fields Team, games, avg_goals, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent* | eval avg_goals=round(avg_goals,2), avg_corners=round(avg_corners,2), avg_cards=round(avg_cards,2), percent_over_2_5_goals=round(percent_over_2_5_goals,2), percent_under_2_5_goals=round(percent_under_2_5_goals,2), percent_corners_over_8=round(percent_corners_over_8,2), percent_corners_over_9=round(percent_corners_over_9,2), percent_corners_over_10=round(percent_corners_over_10,2), percent_btts_yes=round(percent_btts_yes,2), percent_btts_no=round(percent_btts_no,2), percent_cards_over_3_5=round(percent_cards_over_3_5,2), percent_cards_over_4_5=round(percent_cards_over_4_5,2), percent_cards_over_5_5=round(percent_cards_over_5_5,2), percent_cards_under_3_5=round(percent_cards_under_3_5,2), percent_cards_under_4_5=round(percent_cards_under_4_5,2), percent_cards_under_5_5=round(percent_cards_under_5_5,2)</query>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Goals - Over/Under 2.5</title>
+        <search base="base_h2h_search">
+          <query>| fields Team avg* percent*goals | fields - avg_corners, avg_cards | eval avg_goals=round(avg_goals,2), percent_over_2_5_goals=round(percent_over_2_5_goals,2), percent_under_2_5_goals=round(percent_under_2_5_goals,2)</query>
+        </search>
+        <option name="percentagesRow">false</option>
+        <option name="totalsRow">false</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Goals - $home_team$</title>
+        <search base="charts_search">
+          <query>
+            | search HomeTeam="$home_team$" | eval "$home_team$_Goals"=FTHG | eval Total_Goals=FTHG+FTAG | timechart max("$home_team$_Goals") as "$home_team$_Goals" max(Total_Goals) as Total_Goals span=1d
+          </query>
+        </search>
+        <search type="annotation" base="charts_search">
+          <query>| search HomeTeam="$home_team$" | eval annotation_label = AwayTeam</query>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">all</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Goals - $away_team$</title>
+        <search base="charts_search">
+          <query>
+            | search AwayTeam="$away_team$" | eval "$away_team$_Goals"=FTAG | eval Total_Goals=FTHG+FTAG | timechart max("$away_team$_Goals") as "$away_team$_Goals" max(Total_Goals) as Total_Goals span=1d
+          </query>
+        </search>
+        <search type="annotation" base="charts_search">
+          <query>| search AwayTeam="$away_team$" | eval annotation_label = HomeTeam</query>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>BTTS</title>
+        <search base="base_h2h_search">
+          <query>| fields Team avg* percent_btts* | fields - avg_cards, avg_corners | eval avg_goals=round(avg_goals,2), percent_btts_yes=round(percent_btts_yes,2), percent_btts_no=round(percent_btts_no,2)</query>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>BTTS - $home_team$</title>
+        <search base="charts_search">
+          <query>
+            | search HomeTeam="$home_team$" | eval btts=if(FTHG&gt;0 AND FTAG&gt;0,100,0) | timechart max(btts) as BTTS span=1d
+          </query>
+        </search>
+        <search type="annotation" base="charts_search">
+          <query>| search HomeTeam="$home_team$" | eval annotation_label = AwayTeam</query>
+        </search>
+        <!--<search base="base_stats_search">
+          <query>| search HomeTeam="$home_team$" AND Date=*2019* | eval btts=if(FTHG&gt;0 AND FTAG&gt;0,100,0) | eval temp=split(Date,"/") | eval day=mvindex(temp,0), month=mvindex(temp,1), year=mvindex(temp,2), sortable_date=year . month . day | stats values(btts) as BTTS by sortable_date | sort sortable_date | rename sortable_date as date</query>
+        </search>-->
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">all</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>BTTS - $away_team$</title>
+        <search base="charts_search">
+          <query>
+            | search AwayTeam="$away_team$" | eval btts=if(FTHG&gt;0 AND FTAG&gt;0,100,0) | timechart max(btts) as BTTS span=1d
+          </query>
+        </search>
+        <search type="annotation" base="charts_search">
+          <query>| search AwayTeam="$away_team$" | eval annotation_label = HomeTeam</query>
+        </search>
+        <!--<search base="base_stats_search">
+          <query>| search AwayTeam="$away_team$" AND Date=*2019* | eval btts=if(FTHG&gt;0 AND FTAG&gt;0,100,0) | eval temp=split(Date,"/") | eval day=mvindex(temp,0), month=mvindex(temp,1), year=mvindex(temp,2), sortable_date=year . month . day | stats values(btts) as BTTS by sortable_date | sort sortable_date | rename sortable_date as date</query>
+        </search>-->
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">all</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Cards</title>
+        <search base="base_h2h_search">
+          <query>| fields Team avg* percent_cards* | fields - avg_corners, avg_goals | eval percent_cards_over_3_5=round(percent_cards_over_3_5,2), percent_cards_over_4_5=round(percent_cards_over_4_5,2), percent_cards_over_5_5=round(percent_cards_over_5_5,2), percent_cards_under_3_5=round(percent_cards_under_3_5,2), percent_cards_under_4_5=round(percent_cards_under_4_5,2), percent_cards_under_5_5=round(percent_cards_under_5_5,2)</query>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Cards - $home_team$</title>
+        <search base="charts_search">
+          <query>
+            | search HomeTeam="$home_team$" | eval home_cards=(HY+HR), total_cards=(HY+HR+AY+AR) | timechart max(home_cards) as "$home_team$_cards" max(total_cards) as Total_Cards span=1d
+          </query>
+        </search>
+        <search type="annotation" base="charts_search">
+          <query>| search HomeTeam="$home_team$" | eval annotation_label = AwayTeam</query>
+        </search>
+        <!--<search base="base_stats_search">
+          <query>| search HomeTeam="$home_team$" AND Date=*2019* | eval home_cards=(HY+HR), total_cards=(HY+HR+AY+AR) | eval temp=split(Date,"/") | eval day=mvindex(temp,0), month=mvindex(temp,1), year=mvindex(temp,2), sortable_date=year . month . day | stats values(total_cards) as total_cards, values(home_cards) as "$home_team$"_cards by sortable_date | sort sortable_date | rename sortable_date as date</query>
+        </search>-->
+        <option name="charting.axisY.scale">log</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Cards - $away_team$</title>
+        <search base="charts_search">
+          <query>
+            | search AwayTeam="$away_team$" | eval away_cards=(AY+AR), total_cards=(HY+HR+AY+AR) | timechart max(away_cards) as "$away_team$_cards" max(total_cards) as Total_Cards span=1d
+          </query>
+        </search>
+        <search type="annotation" base="charts_search">
+          <query>| search AwayTeam="$away_team$" | eval annotation_label = HomeTeam</query>
+        </search>
+        <!--<search base="base_stats_search">
+          <query>| search HomeTeam="$home_team$" AND Date=*2019* | eval home_cards=(HY+HR), total_cards=(HY+HR+AY+AR) | eval temp=split(Date,"/") | eval day=mvindex(temp,0), month=mvindex(temp,1), year=mvindex(temp,2), sortable_date=year . month . day | stats values(total_cards) as total_cards, values(home_cards) as "$home_team$"_cards by sortable_date | sort sortable_date | rename sortable_date as date</query>
+        </search>-->
+        <option name="charting.axisY.scale">log</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Corners</title>
+        <search base="base_h2h_search">
+          <query>| fields Team avg* percent_corners* | fields - avg_cards, avg_goals | eval percent_corners_over_8=round(percent_corners_over_8,2), percent_corners_over_9=round(percent_corners_over_9,2), percent_corners_over_10=round(percent_corners_over_10,2)</query>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Corners - $home_team$</title>
+        <search base="charts_search">
+          <query>
+            | search HomeTeam="$home_team$" | eval home_corners=(HC), total_corners=(HC+AC) | timechart max(home_corners) as "$home_team$_corners" max(total_corners) as Total_Corners span=1d
+          </query>
+        </search>
+        <search type="annotation" base="charts_search">
+          <query>| search HomeTeam="$home_team$" | eval annotation_label = AwayTeam</query>
+        </search>
+        <!--<search base="base_stats_search">
+          <query>| search HomeTeam="$home_team$" AND Date=*2019* | eval home_corners=(HC), total_corners=(HC+AC) | eval temp=split(Date,"/") | eval day=mvindex(temp,0), month=mvindex(temp,1), year=mvindex(temp,2), sortable_date=year . month . day | stats values(total_corners) as total_corners, values(home_corners) as "$home_team$"_corners by sortable_date | sort sortable_date | rename sortable_date as date</query>
+        </search>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.chart">line</option>-->
+        <!--<search base="base_stats_search">
+          <query>| search HomeTeam="$home_team$" AND Date=*2019* | eval home_cards=(HY+HR), total_cards=(HY+HR+AY+AR) | eval temp=split(Date,"/") | eval day=mvindex(temp,0), month=mvindex(temp,1), year=mvindex(temp,2), sortable_date=year . month . day | stats values(total_cards) as total_cards, values(home_cards) as "$home_team$"_cards by sortable_date | sort sortable_date | rename sortable_date as date</query>
+        </search>-->
+        <option name="charting.axisY.scale">log</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Corners - $away_team$</title>
+        <search base="charts_search">
+          <query>
+            | search AwayTeam="$away_team$" | eval away_corners=(AC), total_corners=(HC+AC) | timechart max(away_corners) as "$away_team$_corners" max(total_corners) as Total_Corners span=1d
+          </query>
+        </search>
+        <search type="annotation" base="charts_search">
+          <query>| search AwayTeam="$away_team$" | eval annotation_label = HomeTeam</query>
+        </search>
+        <!--<search base="base_stats_search">
+          <query>| search AwayTeam="$away_team$" AND Date=*2019* | eval away_corners=(AC), total_corners=(HC+AC) | eval temp=split(Date,"/") | eval day=mvindex(temp,0), month=mvindex(temp,1), year=mvindex(temp,2), sortable_date=year . month . day | stats values(total_corners) as total_corners, values(away_corners) as "$away_team$"_corners by sortable_date | sort sortable_date | rename sortable_date as date</query>
+        </search>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.chart">line</option>-->
+        <!--<search base="base_stats_search">
+          <query>| search HomeTeam="$home_team$" AND Date=*2019* | eval home_cards=(HY+HR), total_cards=(HY+HR+AY+AR) | eval temp=split(Date,"/") | eval day=mvindex(temp,0), month=mvindex(temp,1), year=mvindex(temp,2), sortable_date=year . month . day | stats values(total_cards) as total_cards, values(home_cards) as "$home_team$"_cards by sortable_date | sort sortable_date | rename sortable_date as date</query>
+        </search>-->
+        <option name="charting.axisY.scale">log</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+      </chart>
+    </panel>
+  </row>
+</form>

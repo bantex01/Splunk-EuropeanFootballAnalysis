@@ -1,0 +1,52 @@
+<form>
+  <label>Refs</label>
+  <search id="base_ref_search">
+    <query>index=football_19_20 Referee=* earliest=07/01/2019:00:00:00 latest=09/30/2020:00:00:00  | table *</query>
+    <earliest>1</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <fieldset submitButton="false">
+    <input type="dropdown" token="ref" searchWhenChanged="true">
+      <label>Referee</label>
+      <fieldForLabel>Referee</fieldForLabel>
+      <fieldForValue>Referee</fieldForValue>
+      <search base="base_ref_search">
+        <query>| dedup Referee| sort Referee</query>
+      </search>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Games By Division</title>
+      <table>
+        <search base="base_ref_search">
+          <query>| stats count as Games by Div, Referee | search Referee="$ref$" | fields - Referee</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+    <panel>
+      <chart>
+        <search base="base_ref_search">
+          <query>| stats count as Games by Div, Referee | search Referee="$ref$" | fields - Referee</query>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <search base="base_ref_search">
+          <query>| search Referee="$ref$" 
+| bin _time span=1d 
+| timechart limit=100 span=1d useother=f values(HY) by Referee</query>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+</form>
