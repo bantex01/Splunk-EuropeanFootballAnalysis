@@ -1,5 +1,5 @@
 #!/usr/bin/python
-
+#from __future__ import unicode_literals
 
 import os
 import filecmp
@@ -12,6 +12,7 @@ import ntpath
 from datetime import date
 today = date.today()
 
+#from io import open
 from collections import defaultdict
 
 # Globals
@@ -52,13 +53,13 @@ def grab_fixture_csv():
 
 	# let's clear up any previous lookups and fixtures.csv
 
-	rm_lookup_cmd = "rm -fr /opt/splunk/etc/apps/splunk_btb/lookups/fixtures_*"
+	rm_lookup_cmd = "rm -fr /Applications/Splunk/etc/apps/search/lookups/fixtures_*"
 	try:
 		out = subprocess.check_output([rm_lookup_cmd], shell=True, stderr=subprocess.STDOUT)
 	except Exception, e:
 		print "problem removing old lookups - " +str(e)
 
-        rm_old_fixtures = "rm -fr /opt/splunk/etc/apps/splunk_btb/bin/fixtures.cs*"
+        rm_old_fixtures = "rm -fr /Applications/Splunk/footie/fixtures.cs*"
         try:
                 out = subprocess.check_output([rm_old_fixtures], shell=True, stderr=subprocess.STDOUT)
         except Exception, e:
@@ -80,6 +81,14 @@ def grab_fixture_csv():
 
 		else:
 			print "Successful gather of fixtures.csv"
+			#with open("fixtures.csv", 'r', encoding='iso-8859-1') as inp, open("fixtures.csv.temp", 'w', encoding='utf-8') as outp:
+			#with open("fixtures.csv", 'r', encoding='iso-8859-1') as inp, open("fixtures.csv.temp", 'w') as outp:
+			#	for line in inp:
+			#		outp.write(line)
+
+			#mv_cmd = "mv fixtures.csv.temp fixtures.csv"
+			#print("moving fixtures temp file to fixtures.csv")
+			#mv_run = subprocess.check_output([mv_cmd], shell=True, stderr=subprocess.STDOUT)
 
 
 	except Exception, e:
@@ -95,11 +104,11 @@ def parse_csv_file():
 				continue
 			else:
 				split_array = line.split(",")
-				print split_array[0]	
+				print split_array[0]
 				# let's check we're interested in the league
 				if split_array[0] in DIV_DICT:
 					print "yes, we're interested in "+str(split_array[0])
-					file_to_write_to = "/opt/splunk/etc/apps/splunk_btb/lookups/fixtures_" +str(split_array[0]) +".csv"	
+					file_to_write_to = "/Applications/Splunk/etc/apps/search/lookups/fixtures_" +str(split_array[0]) +".csv"
 					f = open(file_to_write_to,"a")
 					if DIV_DICT[split_array[0]] == 1:
 						print "first entry, let's put header line in"
@@ -107,8 +116,8 @@ def parse_csv_file():
 
 					write_string = "\"" +split_array[3] +"\"" + "," + "\"" +split_array[4] + "\"" + "," + str(DIV_DICT[split_array[0]]) + "\n"
 					print str(write_string)
-					f.write(write_string)	
-					DIV_DICT[split_array[0]] = DIV_DICT[split_array[0]] + 1						
+					f.write(write_string)
+					DIV_DICT[split_array[0]] = DIV_DICT[split_array[0]] + 1
 
 
 
@@ -117,5 +126,3 @@ def parse_csv_file():
 # Grab fixtures list
 grab_fixture_csv()
 parse_csv_file()
-
-
