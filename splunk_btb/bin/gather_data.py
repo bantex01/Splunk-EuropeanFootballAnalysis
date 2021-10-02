@@ -42,7 +42,7 @@ def parse_data_source():
 def clear_splunk_index():
 
 	try:
-		curl_cmd = "/usr/bin/curl -m 10 -k -s -u admin:SarahLee01 -d \"search=search index=football_21_22 earliest_time=1 latest_time=\"08/31/2030:20:00:00\" | delete\" -d output_mode=json https://localhost:8089/services/search/jobs"
+		curl_cmd = "/usr/bin/curl -m 10 -k -s -u admin:actual_password -d \"search=search index=football_21_22 earliest_time=1 latest_time=\"08/31/2030:20:00:00\" | delete\" -d output_mode=json https://localhost:8089/services/search/jobs"
 
 		out = subprocess.check_output([curl_cmd], shell=True, stderr=subprocess.STDOUT)
 		sid_dict = json.loads(out)
@@ -51,7 +51,7 @@ def clear_splunk_index():
 		time.sleep(5)
 
 		try:
-			curl_cmd = "/usr/bin/curl -m 10 -k -s -u admin:SarahLee01 https://localhost:8089/services/search/jobs/" + sid
+			curl_cmd = "/usr/bin/curl -m 10 -k -s -u admin:actual_password https://localhost:8089/services/search/jobs/" + sid
 			out = subprocess.check_output([curl_cmd], shell=True, stderr=subprocess.STDOUT)
 			for line in out.splitlines():
 				if (re.match(r'.*dispatchState\">\w+<.*', line)):
@@ -115,7 +115,7 @@ def grab_and_ingest_csv_files():
 					print("something went wrong with the sed efforts")
 					exit(2)
 
-				oneshot_cmd = "/Applications/Splunk/bin/splunk add oneshot " +str(csv_file) + " -sourcetype footie_csv -index football_21_22 -auth admin:SarahLee01"
+				oneshot_cmd = "/Applications/Splunk/bin/splunk add oneshot " +str(csv_file) + " -sourcetype footie_csv -index football_21_22 -auth admin:actual_password"
 				time.sleep(5)
 				try:
 					out = subprocess.check_output([oneshot_cmd], shell=True, stderr=subprocess.STDOUT)
