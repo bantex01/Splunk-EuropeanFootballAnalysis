@@ -1,10 +1,10 @@
 <form>
   <label>Footie</label>
   <search id="base_stats_search">
-    <query>|inputlookup $div$ 
-|  table team 
-|  map 
-    [search index=football_19_20 (AwayTeam=$$team$$ OR HomeTeam=$$team$$) | eval team="$$team$$" ] maxsearches=100
+    <query>|inputlookup $div$
+|  table team
+|  map
+    [search index IN ($year$) (AwayTeam=$$team$$ OR HomeTeam=$$team$$) | eval team="$$team$$" ] maxsearches=100
 | eval Home_Points=if((HomeTeam==team) AND (FTR=="H"),3,0), Away_Points=if((AwayTeam==team) AND (FTR=="A"),3,0), Draw_Points=if(FTR=="D",1,0), Points_Total=Home_Points+Away_Points+Draw_Points, Full_Time_Home_Team_Goals=if(HomeTeam==team,FTHG,""), Full_Time_Away_Team_Goals=if(AwayTeam==team,FTAG,""), Half_Time_Home_Team_Goals=if(HomeTeam==team,HTHG,""), Half_Time_Away_Team_Goals=if(AwayTeam==team,HTAG,""), Half_Time_Result=case(HTR="A",if(AwayTeam==team,"W","L"),HTR="H",if(HomeTeam==team,"W","L"),HTR="D","D",1=1,"NA"), Full_Time_Result=case(FTR="A",if(AwayTeam==team,"W","L"),FTR="H",if(HomeTeam==team,"W","L"),FTR="D","D",1=1,"NA"), Home_Team_Shots=if(HomeTeam==team,HS,""), Away_Team_Shots=if(AwayTeam==team,AS,""), Home_Team_Shots_On_Target=if(HomeTeam==team,HST,""), Away_Team_Shots_On_Target=if(AwayTeam==team,AST,""), Away_Team_Shots=if(AwayTeam==team,AS,""), Home_Team_Hit_Woodwork=if(HomeTeam==team,HHW,""), Away_Team_Hit_Woodwork=if(AwayTeam==team,AHW,""), Home_Team_Corners=if(HomeTeam==team,HC,""), Away_Team_Corners=if(AwayTeam==team,AC,""), Home_Team_Fouls_Committed=if(HomeTeam==team,HF,""), Away_Team_Fouls_Committed=if(AwayTeam==team,AF,""), Home_Team_Freekicks_Conceded=if(HomeTeam==team,HFKC,""), Away_Team_Freekicks_Conceded=if(AwayTeam==team,AFKC,""), Home_Team_Offsides=if(HomeTeam==team,HO,""), Away_Team_Offsides=if(AwayTeam==team,AO,""), Home_Team_Yellow_Cards=if(HomeTeam==team,HY,""), Away_Team_Yellow_Cards=if(AwayTeam==team,AY,""), Home_Team_Red_Cards=if(HomeTeam==team,HR,""), Away_Team_Red_Cards=if(AwayTeam==team,AR,""), Home_Team_Bookings_Points=if(HomeTeam==team,HBP,""), Away_Team_Bookings_Points=if(AwayTeam==team,ABP,"")
 | table team, HomeTeam, AwayTeam, Referee, FTHG, Full_Time_Home_Team_Goals, FTAG, Full_Time_Away_Team_Goals, HTHG, Half_Time_Home_Team_Goals, HTAG, Half_Time_Away_Team_Goals, HTR, Half_Time_Result, FTR, Full_Time_Result, Home_Points, Away_Points, Draw_Points, Points_Total, Home_Team_Shots, Away_Team_Shots, Home_Team_Shots_On_Target, Away_Team_Shots_On_Target, Home_Team_Hit_Woodwork, Away_Team_Hit_Woodwork, Home_Team_Corners, Away_Team_Corners, Home_Team_Fouls_Committed, Away_Team_Fouls_Committed, Home_Team_Freekicks_Conceded, Away_Team_Freekicks_Conceded, Home_Team_Offsides, Away_Team_Offsides, Home_Team_Yellow_Cards, Away_Team_Yellow_Cards, Home_Team_Red_Cards, Away_Team_Red_Cards, Home_Team_Bookings_Points, Away_Team_Bookings_Points</query>
     <earliest>1</earliest>
@@ -12,7 +12,7 @@
     <sampleRatio>1</sampleRatio>
   </search>
   <search id="base_ref_search">
-    <query>index=football_19_20 | table *</query>
+    <query>index IN ($year$) | table *</query>
     <earliest>1</earliest>
     <latest>now</latest>
     <sampleRatio>1</sampleRatio>
@@ -53,7 +53,7 @@
           <set token="division">E2</set>
         </condition>
         <condition value="england_l2_teams.csv">
-          <set token="division">E2</set>
+          <set token="division">E3</set>
         </condition>
         <condition value="england_conference_teams.csv">
           <set token="division">EC</set>
@@ -99,18 +99,29 @@
         </condition>
         <condition value="belgium_teams.csv">
           <set token="division">B1</set>
-        </condition> 
+        </condition>
         <condition value="portugal_teams.csv">
           <set token="division">P1</set>
-        </condition> 
+        </condition>
         <condition value="turkey_teams.csv">
           <set token="division">T1</set>
-        </condition> 
+        </condition>
         <condition value="greece_teams.csv">
           <set token="division">G1</set>
-        </condition>            
+        </condition>
       </change>
       <initialValue>england_prem_teams.csv</initialValue>
+    </input>
+    <input type="multiselect" token="year" searchWhenChanged="true">
+      <label>Year:</label>
+      <fieldForLabel>index</fieldForLabel>
+      <fieldForValue>index</fieldForValue>
+      <search>
+        <query>`footie_indexes` | dedup index |table index</query>
+        <earliest>0</earliest>
+        <latest></latest>
+      </search>
+      <delimiter> ,</delimiter>
     </input>
   </fieldset>
   <row depends="$debug$">
@@ -119,6 +130,7 @@
         <h1>Debug</h1>
         <p>$div$</p>
         <p>$division$</p>
+        <p>year - $year$</p>
       </html>
     </panel>
   </row>
@@ -157,7 +169,7 @@
       <title>BTTS Stats</title>
       <table>
         <search base="base_ref_search">
-          <query>| search Div=$division$ | eval home_score=if(FTHG>0,"yes","no"), away_score=if(FTAG>0,"yes","no") | eval BTTS=if(home_score=="yes" AND away_score=="yes",1,0), NO_BTTS=if(home_score!="yes" OR away_score!="yes",1,0) | stats count as games, sum(BTTS) as BTTS_YES, sum(NO_BTTS) as BTTS_NO by Div</query>
+          <query>| search Div=$division$ | eval home_score=if(FTHG&gt;0,"yes","no"), away_score=if(FTAG&gt;0,"yes","no") | eval BTTS=if(home_score=="yes" AND away_score=="yes",1,0), NO_BTTS=if(home_score!="yes" OR away_score!="yes",1,0) | stats count as games, sum(BTTS) as BTTS_YES, sum(NO_BTTS) as BTTS_NO by Div</query>
         </search>
       </table>
     </panel>
