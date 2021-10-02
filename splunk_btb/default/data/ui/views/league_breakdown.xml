@@ -1,0 +1,138 @@
+<form>
+  <label>League Breakdown</label>
+  <search id="base_stats_search">
+    <query>index IN ($year$) Div=$division$ | eval GOALS=FTAG+FTHG | eval GOALS_BET=if(GOALS&lt;2.5,"less","more") | eval GOALS_BET_LT_RETURN=if(GOALS_BET=="less",1 * B365Clt2_5,0) | eval GOALS_BET_GT_RETURN=if(GOALS_BET=="more",1 * B365Cgt2_5,0) | eval RESULT_BET=FTR, RESULT_BET_HOME_RETURN=if(RESULT_BET=="H",1 * B365H,0), RESULT_BET_AWAY_RETURN=if(RESULT_BET=="A",1 *B365A,0), RESULT_BET_DRAW_RETURN=if(RESULT_BET=="D",1 * B365D,0) | fields *</query>
+    <earliest>1</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <fieldset submitButton="false">
+    <input type="dropdown" token="div" searchWhenChanged="true">
+      <label>Division:</label>
+      <choice value="england_prem_teams.csv">England - Premiership</choice>
+      <choice value="england_champ_teams.csv">England - Championship</choice>
+      <choice value="england_l1_teams.csv">England - League 1</choice>
+      <choice value="england_l2_teams.csv">England - League 2</choice>
+      <choice value="england_conference_teams.csv">England - Conference</choice>
+      <choice value="scotland_prem_teams.csv">Scotland - Premiership</choice>
+      <choice value="scotland_champ_teams.csv">Scotland - Championship</choice>
+      <choice value="scotland_l1_teams.csv">Scotland - League 1</choice>
+      <choice value="scotland_l2_teams.csv">Scotland - League 2</choice>
+      <choice value="french_l1_teams.csv">France - Ligue 1</choice>
+      <choice value="french_l2_teams.csv">France - Ligue 2</choice>
+      <choice value="german_b1_teams.csv">Germany - Bundesliga 1</choice>
+      <choice value="german_b2_teams.csv">Germany - Bundesliga 2</choice>
+      <choice value="spanish_l1_teams.csv">Spain - League 1</choice>
+      <choice value="spanish_l2_teams.csv">Spain - League 2</choice>
+      <choice value="italian_sa_teams.csv">Italy - Serie A</choice>
+      <choice value="italian_sb_teams.csv">Italy - Serie B</choice>
+      <choice value="dutch_teams.csv">Netherlands - Eredivisie</choice>
+      <choice value="belgium_teams.csv">Belgium - First Division</choice>
+      <choice value="portugal_teams.csv">Portugal - Primeira League</choice>
+      <choice value="turkey_teams.csv">Turkey - Super Lig</choice>
+      <choice value="greece_teams.csv">Greece - League 1</choice>
+      <change>
+        <condition value="england_prem_teams.csv">
+          <set token="division">E0</set>
+        </condition>
+        <condition value="england_champ_teams.csv">
+          <set token="division">E1</set>
+        </condition>
+        <condition value="england_l1_teams.csv">
+          <set token="division">E2</set>
+        </condition>
+        <condition value="england_l2_teams.csv">
+          <set token="division">E3</set>
+        </condition>
+        <condition value="england_conference_teams.csv">
+          <set token="division">EC</set>
+        </condition>
+        <condition value="french_l1_teams.csv">
+          <set token="division">F1</set>
+        </condition>
+        <condition value="french_l2_teams.csv">
+          <set token="division">F2</set>
+        </condition>
+        <condition value="german_b1_teams.csv">
+          <set token="division">D1</set>
+        </condition>
+        <condition value="german_b2_teams.csv">
+          <set token="division">D2</set>
+        </condition>
+        <condition value="scotland_prem_teams.csv">
+          <set token="division">SC0</set>
+        </condition>
+        <condition value="scotland_champ_teams.csv">
+          <set token="division">SC1</set>
+        </condition>
+        <condition value="scotland_l1_teams.csv">
+          <set token="division">SC2</set>
+        </condition>
+        <condition value="scotland_l2_teams.csv">
+          <set token="division">SC3</set>
+        </condition>
+        <condition value="spanish_l1_teams.csv">
+          <set token="division">SP1</set>
+        </condition>
+        <condition value="spanish_l2_teams.csv">
+          <set token="division">SP2</set>
+        </condition>
+        <condition value="italian_sa_teams.csv">
+          <set token="division">I1</set>
+        </condition>
+        <condition value="italian_sb_teams.csv">
+          <set token="division">I2</set>
+        </condition>
+        <condition value="dutch_teams.csv">
+          <set token="division">N1</set>
+        </condition>
+        <condition value="belgium_teams.csv">
+          <set token="division">B1</set>
+        </condition>
+        <condition value="portugal_teams.csv">
+          <set token="division">P1</set>
+        </condition>
+        <condition value="turkey_teams.csv">
+          <set token="division">T1</set>
+        </condition>
+        <condition value="greece_teams.csv">
+          <set token="division">G1</set>
+        </condition>
+      </change>
+      <initialValue>england_prem_teams.csv</initialValue>
+    </input>
+    <input type="multiselect" token="year" searchWhenChanged="true">
+      <label>Year:</label>
+      <fieldForLabel>index</fieldForLabel>
+      <fieldForValue>index</fieldForValue>
+      <search>
+        <query>`footie_indexes` | dedup index |table index</query>
+        <earliest>0</earliest>
+        <latest></latest>
+      </search>
+      <delimiter> ,</delimiter>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <table>
+        <title>Game Result Returns</title>
+        <search base="base_stats_search">
+          <query>| stats count as stake, count(eval(RESULT_BET=="H")) as home_wins, count(eval(RESULT_BET=="A")) as away_wins, count(eval(RESULT_BET=="D")) as draws, sum(RESULT_BET_HOME_RETURN) as home_returns, sum(RESULT_BET_AWAY_RETURN) as away_returns, sum(RESULT_BET_DRAW_RETURN) as draw_returns by index, Div | eval profit_home_wins = home_returns - stake, percent_profit_home_wins = (profit_home_wins / stake) * 100, profit_away_wins = away_returns - stake, percent_profit_away_wins = (profit_away_wins / stake) * 100, profit_draws = draw_returns - stake, percent_profit_draws = (profit_draws / stake) * 100</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+    <row>
+    <panel>
+      <table>
+        <title>Under/Over 2.5 Goals Returns</title>
+        <search base="base_stats_search">
+          <query>| stats count as stake, count(eval(GOALS_BET=="less")) as goals_less, count(eval(GOALS_BET=="more")) as goals_more, sum(GOALS_BET_LT_RETURN) as goals_lt_return, sum(GOALS_BET_GT_RETURN) as goals_gt_return by index, Div | eval profit_goals_gt = goals_gt_return - stake | eval profit_goals_lt = goals_lt_return - stake | eval percent_profit_gt = (profit_goals_gt / stake) * 100 | eval percent_profit_lt = (profit_goals_lt / stake) * 100 | eval profit_per_game_gt = profit_goals_gt / stake | eval profit_per_game_lt = profit_goals_lt / stake</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+</form>
