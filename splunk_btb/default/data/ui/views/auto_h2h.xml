@@ -2,9 +2,14 @@
   <label>auto_h2h</label>
   <search id="base_h2h_search">
     <query>
-      index=football_19_20 [ | inputlookup $lookup$ | fields HomeTeam | format] | eval under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR) | stats avg(cards_total) as avg_cards, avg(HC) as avg_corners, avg(FTHG) as avg_goals, count as games, sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 by HomeTeam | rename HomeTeam as Team | append [search index=football_19_20 [| inputlookup $lookup$ | fields AwayTeam | format] | eval under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(AY+AR) | stats avg(cards_total) as avg_cards, avg(AC) as avg_corners, avg(FTAG) as avg_goals, count as games, sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 by AwayTeam | rename AwayTeam as Team] | eval percent_under_2_5_goals = (under_2_5_goals / games) * 100, percent_over_2_5_goals = (over_2_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100 | table *</query>
+      index=football_21_22 [ | inputlookup $lookup$ | fields HomeTeam | format] | eval under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR) | stats avg(cards_total) as avg_cards, avg(HC) as avg_corners, avg(FTHG) as avg_goals, count as games, sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 by HomeTeam | rename HomeTeam as Team | append [search index=football_21_22 [| inputlookup $lookup$ | fields AwayTeam | format] | eval under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(AY+AR) | stats avg(cards_total) as avg_cards, avg(AC) as avg_corners, avg(FTAG) as avg_goals, count as games, sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 by AwayTeam | rename AwayTeam as Team] | eval percent_under_2_5_goals = (under_2_5_goals / games) * 100, percent_over_2_5_goals = (over_2_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100 | table *</query>
   </search>
-
+  <search id="base_odds_search">
+    <query>
+      index=football_21_22 Div=$division$ | reverse | table *
+      <!--| reverse | search (HomeTeam="Ayr" OR AwayTeam="Ayr") | eval HTeam="Ayr", gs=IF(HomeTeam="Ayr",FTHG,FTAG), gc=IF(AwayTeam="Ayr",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as home_goals_s, sum(gc) as home_goals_c by HTeam | stats last(home_goals_s) as home_gos last(home_goals_c) as home_goc by HTeam | eval home_goal_sup=home_gos-home_goc| appendcols [| search index=football_21_22 Div=SC1 | reverse | search (HomeTeam="Dunfermline" OR AwayTeam="Dunfermline") | eval ATeam="Dunfermline", gs=IF(HomeTeam="Dunfermline",FTHG,FTAG), gc=IF(AwayTeam="Dunfermline",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as away_goals_s, sum(gc) as away_goals_c by ATeam | stats last(away_goals_s) as away_gos last(away_goals_c) as away_goc by ATeam | eval away_goal_sup=away_gos-away_goc] | eval match_rating=home_goal_sup-away_goal_sup, hwin_prob=(1.56*1)+46.47, fair_odds=100/hwin_prob-->
+    </query>
+  </search>
 
   <fieldset submitButton="false">
     <input type="dropdown" token="lookup" searchWhenChanged="true">
@@ -17,11 +22,11 @@
       <choice value="fixtures_SC0.csv">Scotland - Premiership</choice>
       <choice value="fixtures_SC1.csv">Scotland - Championship</choice>
       <choice value="fixtures_SC2.csv">Scotland - League 1</choice>
-      <choice value="fixtures_SC3.csv">Scotland - League 2</choice> 
+      <choice value="fixtures_SC3.csv">Scotland - League 2</choice>
       <choice value="fixtures_D1.csv">Germany - Bundesliga 1</choice>
       <choice value="fixtures_D2.csv">Germany - Bundesliga 2</choice>
       <choice value="fixtures_I1.csv">Italy - Serie A</choice>
-      <choice value="fixtures_I2.csv">Italy - Serie B</choice> 
+      <choice value="fixtures_I2.csv">Italy - Serie B</choice>
       <choice value="fixtures_SP1.csv">Spain - League 1</choice>
       <choice value="fixtures_SP2.csv">Spain - League 2</choice>
       <choice value="fixtures_F1.csv">France - League 1</choice>
@@ -31,7 +36,7 @@
       <choice value="fixtures_P1.csv">Portugal - Primeira League</choice>
       <choice value="fixtures_T1.csv">Turkey - Super Lig</choice>
       <choice value="fixtures_G1.csv">Greece - League 1</choice>
-        <change>
+       <!-- <change>
               <unset token="form.game1_home"></unset>
               <unset token="form.game2_home"></unset>
               <unset token="form.game3_home"></unset>
@@ -55,7 +60,602 @@
               <unset token="form.game9_away"></unset>
               <unset token="form.game10_away"></unset>
               <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>-->
+        <change>
+        <condition value="fixtures_E0.csv">
+          <set token="division">E0</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
               <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_E1.csv">
+          <set token="division">E1</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_E2.csv">
+          <set token="division">E2</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_E3.csv">
+          <set token="division">E3</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_EC.csv">
+          <set token="division">EC</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_F1.csv">
+          <set token="division">F1</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_F2.csv">
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+          <set token="division">F2</set>
+        </condition>
+        <condition value="fixtures_D1.csv">
+          <set token="division">D1</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_D2.csv">
+          <set token="division">D2</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_SC0.csv">
+          <set token="division">SC0</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_SC1.csv">
+          <set token="division">SC1</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_SC2.csv">
+          <set token="division">SC2</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_SC3.csv">
+          <set token="division">SC3</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_SP1.csv">
+          <set token="division">SP1</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_SP2.csv">
+          <set token="division">SP2</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_I1.csv">
+          <set token="division">I1</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_I2.csv">
+          <set token="division">I2</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_N1.csv">
+          <set token="division">N1</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_B1.csv">
+          <set token="division">B1</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_P1.csv">
+          <set token="division">P1</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_T1.csv">
+          <set token="division">T1</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
+        <condition value="fixtures_G1.csv">
+          <set token="division">G1</set>
+          <unset token="form.game1_home"></unset>
+              <unset token="form.game2_home"></unset>
+              <unset token="form.game3_home"></unset>
+              <unset token="form.game4_home"></unset>
+              <unset token="form.game5_home"></unset>
+              <unset token="form.game6_home"></unset>
+              <unset token="form.game7_home"></unset>
+              <unset token="form.game8_home"></unset>
+              <unset token="form.game9_home"></unset>
+              <unset token="form.game10_home"></unset>
+              <unset token="form.game11_home"></unset>
+              <unset token="form.game12_home"></unset>
+              <unset token="form.game1_away"></unset>
+              <unset token="form.game2_away"></unset>
+              <unset token="form.game3_away"></unset>
+              <unset token="form.game4_away"></unset>
+              <unset token="form.game5_away"></unset>
+              <unset token="form.game6_away"></unset>
+              <unset token="form.game7_away"></unset>
+              <unset token="form.game8_away"></unset>
+              <unset token="form.game9_away"></unset>
+              <unset token="form.game10_away"></unset>
+              <unset token="form.game11_away"></unset>
+              <unset token="form.game12_away"></unset>
+        </condition>
         </change>
     </input>
   </fieldset>
@@ -63,6 +663,7 @@
     <panel>
       <html>
         <p>game1_home is $game1_home$</p>
+        <p>division is $division$</p>
       </html>
     </panel>
   </row>
@@ -98,7 +699,7 @@
       <html>
         <h1>Game 1 - $game1_home$ v $game1_away$</h1>
         <p>
-          <a href="head2head?form.home_team=$game1_home$&amp;form.away_team=$game1_away$" target="_blank">Link to head to head</a>
+          <a href="../search/head2head?form.home_team=$game1_home$&amp;form.away_team=$game1_away$" target="_blank">Link to head to head</a>
         </p>
       </html>
     </panel>
@@ -113,9 +714,22 @@
           <query>| table * | search (Team="$game1_home$" OR Team="$game1_away$") | fields Team, games, avg_goals, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent*</query>
         </search>
       </table>
-  </row>    
+  </row>
     <row>
     <panel><html><h1>Betting focus - Compound Averages</h1></html></panel>
+  </row>
+    <row>
+    <panel>
+      <table>
+        <title>Home Win Analysis</title>
+        <search base="base_odds_search">
+          <query>| search (HomeTeam="$game1_home$" OR AwayTeam="$game1_home$") | eval HTeam="$game1_home$", gs=IF(HomeTeam="$game1_home$",FTHG,FTAG), gc=IF(AwayTeam="$game1_home$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as home_goals_s, sum(gc) as home_goals_c by HTeam | stats last(home_goals_s) as home_gos last(home_goals_c) as home_goc by HTeam | eval home_goal_sup=home_gos-home_goc| appendcols [| search index=football_21_22 Div=$division$ | reverse | search (HomeTeam="$game1_away$" OR AwayTeam="$game1_away$") | eval ATeam="$game1_away$", gs=IF(HomeTeam="$game1_away$",FTHG,FTAG), gc=IF(AwayTeam="$game1_away$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as away_goals_s, sum(gc) as away_goals_c by ATeam | stats last(away_goals_s) as away_gos last(away_goals_c) as away_goc by ATeam | eval away_goal_sup=away_gos-away_goc] | eval match_rating=home_goal_sup-away_goal_sup, hwin_prob=(1.56*match_rating)+46.47, fair_odds=100/hwin_prob | table HTeam, home_gos, home_goc, home_goal_sup, ATeam, away_gos, away_goc, away_goal_sup, match_rating, hwin_prob, fair_odds | rename HTeam as "Home Team", home_gos as "Home Team Goals For (last6)", home_goc as "Home Team Goals Against (last6)", home_goal_sup as "Home Team Goal Superiority", ATeam as "Away Team", away_gos as "Away Team Goals For (last6)", away_goc as "Away Team Goals Against (last 6)", away_goal_sup as "Away Team Goal Superiority", match_rating as "Match Rating", hwin_prob as "Home Win Probability %", fair_odds as "Fair Odds"</query>
+        </search>
+        <format type="color" field="Match Rating">
+          <colorPalette type="map">{-2:#65A637, -1:#65A637, 0:#65A637, 1:#65A637, 2:#65A637}</colorPalette>
+          </format>
+      </table>
+    </panel>
   </row>
   <row>
     <panel>
@@ -190,7 +804,7 @@
         </format>
         <format type="color" field="avg_corners_over_10">
           <colorPalette type="expression">if (value &lt;= 30, "#FFBF00", "#ffffff")</colorPalette>
-        </format>        
+        </format>
         <format type="color" field="avg_corners_over_8">
           <colorPalette type="expression">if (value &gt;= 80, "#65A637", "#ffffff")</colorPalette>
         </format>
@@ -226,7 +840,7 @@
       <html>
         <h1>Game 2 - $game2_home$ v $game2_away$</h1>
           <p>
-          <a href="head2head?form.home_team=$game2_home$&amp;form.away_team=$game2_away$" target="_blank">Link to head to head</a>
+          <a href="../search/head2head?form.home_team=$game2_home$&amp;form.away_team=$game2_away$" target="_blank">Link to head to head</a>
         </p>
       </html>
     </panel>
@@ -241,9 +855,22 @@
           <query>| table * | search (Team="$game2_home$" OR Team="$game2_away$") | fields Team, games, avg_goals, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent*</query>
         </search>
       </table>
-  </row>    
+  </row>
     <row>
     <panel><html><h1>Betting focus - Compound Averages</h1></html></panel>
+  </row>
+     <row>
+    <panel>
+      <table>
+        <title>Home Win Analysis</title>
+        <search base="base_odds_search">
+          <query>| search (HomeTeam="$game2_home$" OR AwayTeam="$game2_home$") | eval HTeam="$game2_home$", gs=IF(HomeTeam="$game2_home$",FTHG,FTAG), gc=IF(AwayTeam="$game2_home$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as home_goals_s, sum(gc) as home_goals_c by HTeam | stats last(home_goals_s) as home_gos last(home_goals_c) as home_goc by HTeam | eval home_goal_sup=home_gos-home_goc| appendcols [| search index=football_21_22 Div=$division$ | reverse | search (HomeTeam="$game2_away$" OR AwayTeam="$game2_away$") | eval ATeam="$game2_away$", gs=IF(HomeTeam="$game2_away$",FTHG,FTAG), gc=IF(AwayTeam="$game2_away$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as away_goals_s, sum(gc) as away_goals_c by ATeam | stats last(away_goals_s) as away_gos last(away_goals_c) as away_goc by ATeam | eval away_goal_sup=away_gos-away_goc] | eval match_rating=home_goal_sup-away_goal_sup, hwin_prob=(1.56*match_rating)+46.47, fair_odds=100/hwin_prob | table HTeam, home_gos, home_goc, home_goal_sup, ATeam, away_gos, away_goc, away_goal_sup, match_rating, hwin_prob, fair_odds | rename HTeam as "Home Team", home_gos as "Home Team Goals For (last6)", home_goc as "Home Team Goals Against (last6)", home_goal_sup as "Home Team Goal Superiority", ATeam as "Away Team", away_gos as "Away Team Goals For (last6)", away_goc as "Away Team Goals Against (last 6)", away_goal_sup as "Away Team Goal Superiority", match_rating as "Match Rating", hwin_prob as "Home Win Probability %", fair_odds as "Fair Odds"</query>
+        </search>
+         <format type="color" field="Match Rating">
+          <colorPalette type="map">{-2:#65A637, -1:#65A637, 0:#65A637, 1:#65A637, 2:#65A637}</colorPalette>
+          </format>
+      </table>
+    </panel>
   </row>
   <row>
     <panel>
@@ -318,7 +945,7 @@
         </format>
         <format type="color" field="avg_corners_over_10">
           <colorPalette type="expression">if (value &lt;= 30, "#FFBF00", "#ffffff")</colorPalette>
-        </format>        
+        </format>
         <format type="color" field="avg_corners_over_8">
           <colorPalette type="expression">if (value &gt;= 80, "#65A637", "#ffffff")</colorPalette>
         </format>
@@ -354,7 +981,7 @@
       <html>
         <h1>Game 3 - $game3_home$ v $game3_away$</h1>
                 <p>
-          <a href="head2head?form.home_team=$game3_home$&amp;form.away_team=$game3_away$" target="_blank">Link to head to head</a>
+          <a href="../search/head2head?form.home_team=$game3_home$&amp;form.away_team=$game3_away$" target="_blank">Link to head to head</a>
         </p>
       </html>
     </panel>
@@ -369,9 +996,22 @@
           <query>| table * | search (Team="$game3_home$" OR Team="$game3_away$") | fields Team, games, avg_goals, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent*</query>
         </search>
       </table>
-  </row>    
+  </row>
     <row>
     <panel><html><h1>Betting focus - Compound Averages</h1></html></panel>
+  </row>
+      <row>
+    <panel>
+      <table>
+        <title>Home Win Analysis</title>
+        <search base="base_odds_search">
+          <query>| search (HomeTeam="$game3_home$" OR AwayTeam="$game3_home$") | eval HTeam="$game3_home$", gs=IF(HomeTeam="$game3_home$",FTHG,FTAG), gc=IF(AwayTeam="$game3_home$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as home_goals_s, sum(gc) as home_goals_c by HTeam | stats last(home_goals_s) as home_gos last(home_goals_c) as home_goc by HTeam | eval home_goal_sup=home_gos-home_goc| appendcols [| search index=football_21_22 Div=$division$ | reverse | search (HomeTeam="$game3_away$" OR AwayTeam="$game3_away$") | eval ATeam="$game3_away$", gs=IF(HomeTeam="$game3_away$",FTHG,FTAG), gc=IF(AwayTeam="$game3_away$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as away_goals_s, sum(gc) as away_goals_c by ATeam | stats last(away_goals_s) as away_gos last(away_goals_c) as away_goc by ATeam | eval away_goal_sup=away_gos-away_goc] | eval match_rating=home_goal_sup-away_goal_sup, hwin_prob=(1.56*match_rating)+46.47, fair_odds=100/hwin_prob | table HTeam, home_gos, home_goc, home_goal_sup, ATeam, away_gos, away_goc, away_goal_sup, match_rating, hwin_prob, fair_odds | rename HTeam as "Home Team", home_gos as "Home Team Goals For (last6)", home_goc as "Home Team Goals Against (last6)", home_goal_sup as "Home Team Goal Superiority", ATeam as "Away Team", away_gos as "Away Team Goals For (last6)", away_goc as "Away Team Goals Against (last 6)", away_goal_sup as "Away Team Goal Superiority", match_rating as "Match Rating", hwin_prob as "Home Win Probability %", fair_odds as "Fair Odds"</query>
+        </search>
+        <format type="color" field="Match Rating">
+          <colorPalette type="map">{-2:#65A637, -1:#65A637, 0:#65A637, 1:#65A637, 2:#65A637}</colorPalette>
+          </format>
+      </table>
+    </panel>
   </row>
   <row>
     <panel>
@@ -446,7 +1086,7 @@
         </format>
         <format type="color" field="avg_corners_over_10">
           <colorPalette type="expression">if (value &lt;= 30, "#FFBF00", "#ffffff")</colorPalette>
-        </format>        
+        </format>
         <format type="color" field="avg_corners_over_8">
           <colorPalette type="expression">if (value &gt;= 80, "#65A637", "#ffffff")</colorPalette>
         </format>
@@ -482,7 +1122,7 @@
       <html>
         <h1>Game 4 - $game4_home$ v $game4_away$</h1>
                 <p>
-          <a href="head2head?form.home_team=$game4_home$&amp;form.away_team=$game4_away$" target="_blank">Link to head to head</a>
+          <a href="../search/head2head?form.home_team=$game4_home$&amp;form.away_team=$game4_away$" target="_blank">Link to head to head</a>
         </p>
       </html>
     </panel>
@@ -497,9 +1137,22 @@
           <query>| table * | search (Team="$game4_home$" OR Team="$game4_away$") | fields Team, games, avg_goals, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent*</query>
         </search>
       </table>
-  </row>    
+  </row>
     <row>
     <panel><html><h1>Betting focus - Compound Averages</h1></html></panel>
+  </row>
+        <row>
+    <panel>
+      <table>
+        <title>Home Win Analysis</title>
+        <search base="base_odds_search">
+          <query>| search (HomeTeam="$game4_home$" OR AwayTeam="$game4_home$") | eval HTeam="$game4_home$", gs=IF(HomeTeam="$game4_home$",FTHG,FTAG), gc=IF(AwayTeam="$game4_home$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as home_goals_s, sum(gc) as home_goals_c by HTeam | stats last(home_goals_s) as home_gos last(home_goals_c) as home_goc by HTeam | eval home_goal_sup=home_gos-home_goc| appendcols [| search index=football_21_22 Div=$division$ | reverse | search (HomeTeam="$game4_away$" OR AwayTeam="$game4_away$") | eval ATeam="$game4_away$", gs=IF(HomeTeam="$game4_away$",FTHG,FTAG), gc=IF(AwayTeam="$game4_away$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as away_goals_s, sum(gc) as away_goals_c by ATeam | stats last(away_goals_s) as away_gos last(away_goals_c) as away_goc by ATeam | eval away_goal_sup=away_gos-away_goc] | eval match_rating=home_goal_sup-away_goal_sup, hwin_prob=(1.56*match_rating)+46.47, fair_odds=100/hwin_prob | table HTeam, home_gos, home_goc, home_goal_sup, ATeam, away_gos, away_goc, away_goal_sup, match_rating, hwin_prob, fair_odds | rename HTeam as "Home Team", home_gos as "Home Team Goals For (last6)", home_goc as "Home Team Goals Against (last6)", home_goal_sup as "Home Team Goal Superiority", ATeam as "Away Team", away_gos as "Away Team Goals For (last6)", away_goc as "Away Team Goals Against (last 6)", away_goal_sup as "Away Team Goal Superiority", match_rating as "Match Rating", hwin_prob as "Home Win Probability %", fair_odds as "Fair Odds"</query>
+        </search>
+        <format type="color" field="Match Rating">
+          <colorPalette type="map">{-2:#65A637, -1:#65A637, 0:#65A637, 1:#65A637, 2:#65A637}</colorPalette>
+          </format>
+      </table>
+    </panel>
   </row>
   <row>
     <panel>
@@ -574,7 +1227,7 @@
         </format>
         <format type="color" field="avg_corners_over_10">
           <colorPalette type="expression">if (value &lt;= 30, "#FFBF00", "#ffffff")</colorPalette>
-        </format>        
+        </format>
         <format type="color" field="avg_corners_over_8">
           <colorPalette type="expression">if (value &gt;= 80, "#65A637", "#ffffff")</colorPalette>
         </format>
@@ -610,7 +1263,7 @@
       <html>
         <h1>Game 5 - $game5_home$ v $game5_away$</h1>
                 <p>
-          <a href="head2head?form.home_team=$game5_home$&amp;form.away_team=$game5_away$" target="_blank">Link to head to head</a>
+          <a href="../search/head2head?form.home_team=$game5_home$&amp;form.away_team=$game5_away$" target="_blank">Link to head to head</a>
         </p>
       </html>
     </panel>
@@ -625,9 +1278,22 @@
           <query>| table * | search (Team="$game5_home$" OR Team="$game5_away$") | fields Team, games, avg_goals, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent*</query>
         </search>
       </table>
-  </row>    
+  </row>
     <row>
     <panel><html><h1>Betting focus - Compound Averages</h1></html></panel>
+  </row>
+          <row>
+    <panel>
+      <table>
+        <title>Home Win Analysis</title>
+        <search base="base_odds_search">
+          <query>| search (HomeTeam="$game5_home$" OR AwayTeam="$game5_home$") | eval HTeam="$game5_home$", gs=IF(HomeTeam="$game5_home$",FTHG,FTAG), gc=IF(AwayTeam="$game5_home$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as home_goals_s, sum(gc) as home_goals_c by HTeam | stats last(home_goals_s) as home_gos last(home_goals_c) as home_goc by HTeam | eval home_goal_sup=home_gos-home_goc| appendcols [| search index=football_21_22 Div=$division$ | reverse | search (HomeTeam="$game5_away$" OR AwayTeam="$game5_away$") | eval ATeam="$game5_away$", gs=IF(HomeTeam="$game5_away$",FTHG,FTAG), gc=IF(AwayTeam="$game5_away$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as away_goals_s, sum(gc) as away_goals_c by ATeam | stats last(away_goals_s) as away_gos last(away_goals_c) as away_goc by ATeam | eval away_goal_sup=away_gos-away_goc] | eval match_rating=home_goal_sup-away_goal_sup, hwin_prob=(1.56*match_rating)+46.47, fair_odds=100/hwin_prob | table HTeam, home_gos, home_goc, home_goal_sup, ATeam, away_gos, away_goc, away_goal_sup, match_rating, hwin_prob, fair_odds | rename HTeam as "Home Team", home_gos as "Home Team Goals For (last6)", home_goc as "Home Team Goals Against (last6)", home_goal_sup as "Home Team Goal Superiority", ATeam as "Away Team", away_gos as "Away Team Goals For (last6)", away_goc as "Away Team Goals Against (last 6)", away_goal_sup as "Away Team Goal Superiority", match_rating as "Match Rating", hwin_prob as "Home Win Probability %", fair_odds as "Fair Odds"</query>
+        </search>
+        <format type="color" field="Match Rating">
+          <colorPalette type="map">{-2:#65A637, -1:#65A637, 0:#65A637, 1:#65A637, 2:#65A637}</colorPalette>
+          </format>
+      </table>
+    </panel>
   </row>
   <row>
     <panel>
@@ -702,7 +1368,7 @@
         </format>
         <format type="color" field="avg_corners_over_10">
           <colorPalette type="expression">if (value &lt;= 30, "#FFBF00", "#ffffff")</colorPalette>
-        </format>        
+        </format>
         <format type="color" field="avg_corners_over_8">
           <colorPalette type="expression">if (value &gt;= 80, "#65A637", "#ffffff")</colorPalette>
         </format>
@@ -739,7 +1405,7 @@
       <html>
         <h1>Game 6 - $game6_home$ v $game6_away$</h1>
                 <p>
-          <a href="head2head?form.home_team=$game6_home$&amp;form.away_team=$game6_away$" target="_blank">Link to head to head</a>
+          <a href="../search/head2head?form.home_team=$game6_home$&amp;form.away_team=$game6_away$" target="_blank">Link to head to head</a>
         </p>
       </html>
     </panel>
@@ -754,9 +1420,22 @@
           <query>| table * | search (Team="$game6_home$" OR Team="$game6_away$") | fields Team, games, avg_goals, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent*</query>
         </search>
       </table>
-  </row>    
+  </row>
     <row>
     <panel><html><h1>Betting focus - Compound Averages</h1></html></panel>
+  </row>
+            <row>
+    <panel>
+      <table>
+        <title>Home Win Analysis</title>
+        <search base="base_odds_search">
+          <query>| search (HomeTeam="$game6_home$" OR AwayTeam="$game6_home$") | eval HTeam="$game6_home$", gs=IF(HomeTeam="$game6_home$",FTHG,FTAG), gc=IF(AwayTeam="$game6_home$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as home_goals_s, sum(gc) as home_goals_c by HTeam | stats last(home_goals_s) as home_gos last(home_goals_c) as home_goc by HTeam | eval home_goal_sup=home_gos-home_goc| appendcols [| search index=football_21_22 Div=$division$ | reverse | search (HomeTeam="$game6_away$" OR AwayTeam="$game6_away$") | eval ATeam="$game6_away$", gs=IF(HomeTeam="$game6_away$",FTHG,FTAG), gc=IF(AwayTeam="$game6_away$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as away_goals_s, sum(gc) as away_goals_c by ATeam | stats last(away_goals_s) as away_gos last(away_goals_c) as away_goc by ATeam | eval away_goal_sup=away_gos-away_goc] | eval match_rating=home_goal_sup-away_goal_sup, hwin_prob=(1.56*match_rating)+46.47, fair_odds=100/hwin_prob | table HTeam, home_gos, home_goc, home_goal_sup, ATeam, away_gos, away_goc, away_goal_sup, match_rating, hwin_prob, fair_odds | rename HTeam as "Home Team", home_gos as "Home Team Goals For (last6)", home_goc as "Home Team Goals Against (last6)", home_goal_sup as "Home Team Goal Superiority", ATeam as "Away Team", away_gos as "Away Team Goals For (last6)", away_goc as "Away Team Goals Against (last 6)", away_goal_sup as "Away Team Goal Superiority", match_rating as "Match Rating", hwin_prob as "Home Win Probability %", fair_odds as "Fair Odds"</query>
+        </search>
+        <format type="color" field="Match Rating">
+          <colorPalette type="map">{-2:#65A637, -1:#65A637, 0:#65A637, 1:#65A637, 2:#65A637}</colorPalette>
+          </format>
+      </table>
+    </panel>
   </row>
   <row>
     <panel>
@@ -831,7 +1510,7 @@
         </format>
         <format type="color" field="avg_corners_over_10">
           <colorPalette type="expression">if (value &lt;= 30, "#FFBF00", "#ffffff")</colorPalette>
-        </format>        
+        </format>
         <format type="color" field="avg_corners_over_8">
           <colorPalette type="expression">if (value &gt;= 80, "#65A637", "#ffffff")</colorPalette>
         </format>
@@ -867,7 +1546,7 @@
       <html>
         <h1>Game 7 - $game7_home$ v $game7_away$</h1>
                 <p>
-          <a href="head2head?form.home_team=$game7_home$&amp;form.away_team=$game7_away$" target="_blank">Link to head to head</a>
+          <a href="../search/head2head?form.home_team=$game7_home$&amp;form.away_team=$game7_away$" target="_blank">Link to head to head</a>
         </p>
       </html>
     </panel>
@@ -882,9 +1561,22 @@
           <query>| table * | search (Team="$game7_home$" OR Team="$game7_away$") | fields Team, games, avg_goals, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent*</query>
         </search>
       </table>
-  </row>    
+  </row>
     <row>
     <panel><html><h1>Betting focus - Compound Averages</h1></html></panel>
+  </row>
+              <row>
+    <panel>
+      <table>
+        <title>Home Win Analysis</title>
+        <search base="base_odds_search">
+          <query>| search (HomeTeam="$game7_home$" OR AwayTeam="$game7_home$") | eval HTeam="$game7_home$", gs=IF(HomeTeam="$game7_home$",FTHG,FTAG), gc=IF(AwayTeam="$game7_home$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as home_goals_s, sum(gc) as home_goals_c by HTeam | stats last(home_goals_s) as home_gos last(home_goals_c) as home_goc by HTeam | eval home_goal_sup=home_gos-home_goc| appendcols [| search index=football_21_22 Div=$division$ | reverse | search (HomeTeam="$game7_away$" OR AwayTeam="$game7_away$") | eval ATeam="$game7_away$", gs=IF(HomeTeam="$game7_away$",FTHG,FTAG), gc=IF(AwayTeam="$game7_away$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as away_goals_s, sum(gc) as away_goals_c by ATeam | stats last(away_goals_s) as away_gos last(away_goals_c) as away_goc by ATeam | eval away_goal_sup=away_gos-away_goc] | eval match_rating=home_goal_sup-away_goal_sup, hwin_prob=(1.56*match_rating)+46.47, fair_odds=100/hwin_prob | table HTeam, home_gos, home_goc, home_goal_sup, ATeam, away_gos, away_goc, away_goal_sup, match_rating, hwin_prob, fair_odds | rename HTeam as "Home Team", home_gos as "Home Team Goals For (last6)", home_goc as "Home Team Goals Against (last6)", home_goal_sup as "Home Team Goal Superiority", ATeam as "Away Team", away_gos as "Away Team Goals For (last6)", away_goc as "Away Team Goals Against (last 6)", away_goal_sup as "Away Team Goal Superiority", match_rating as "Match Rating", hwin_prob as "Home Win Probability %", fair_odds as "Fair Odds"</query>
+        </search>
+        <format type="color" field="Match Rating">
+          <colorPalette type="map">{-2:#65A637, -1:#65A637, 0:#65A637, 1:#65A637, 2:#65A637}</colorPalette>
+          </format>
+      </table>
+    </panel>
   </row>
   <row>
     <panel>
@@ -959,7 +1651,7 @@
         </format>
         <format type="color" field="avg_corners_over_10">
           <colorPalette type="expression">if (value &lt;= 30, "#FFBF00", "#ffffff")</colorPalette>
-        </format>        
+        </format>
         <format type="color" field="avg_corners_over_8">
           <colorPalette type="expression">if (value &gt;= 80, "#65A637", "#ffffff")</colorPalette>
         </format>
@@ -995,7 +1687,7 @@
       <html>
         <h1>Game 8 - $game8_home$ v $game8_away$</h1>
                 <p>
-          <a href="head2head?form.home_team=$game8_home$&amp;form.away_team=$game8_away$" target="_blank">Link to head to head</a>
+          <a href="../search/head2head?form.home_team=$game8_home$&amp;form.away_team=$game8_away$" target="_blank">Link to head to head</a>
         </p>
       </html>
     </panel>
@@ -1010,9 +1702,22 @@
           <query>| table * | search (Team="$game8_home$" OR Team="$game8_away$") | fields Team, games, avg_goals, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent*</query>
         </search>
       </table>
-  </row>    
+  </row>
     <row>
     <panel><html><h1>Betting focus - Compound Averages</h1></html></panel>
+  </row>
+                <row>
+    <panel>
+      <table>
+        <title>Home Win Analysis</title>
+        <search base="base_odds_search">
+          <query>| search (HomeTeam="$game8_home$" OR AwayTeam="$game8_home$") | eval HTeam="$game8_home$", gs=IF(HomeTeam="$game8_home$",FTHG,FTAG), gc=IF(AwayTeam="$game8_home$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as home_goals_s, sum(gc) as home_goals_c by HTeam | stats last(home_goals_s) as home_gos last(home_goals_c) as home_goc by HTeam | eval home_goal_sup=home_gos-home_goc| appendcols [| search index=football_21_22 Div=$division$ | reverse | search (HomeTeam="$game8_away$" OR AwayTeam="$game8_away$") | eval ATeam="$game8_away$", gs=IF(HomeTeam="$game8_away$",FTHG,FTAG), gc=IF(AwayTeam="$game8_away$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as away_goals_s, sum(gc) as away_goals_c by ATeam | stats last(away_goals_s) as away_gos last(away_goals_c) as away_goc by ATeam | eval away_goal_sup=away_gos-away_goc] | eval match_rating=home_goal_sup-away_goal_sup, hwin_prob=(1.56*match_rating)+46.47, fair_odds=100/hwin_prob | table HTeam, home_gos, home_goc, home_goal_sup, ATeam, away_gos, away_goc, away_goal_sup, match_rating, hwin_prob, fair_odds | rename HTeam as "Home Team", home_gos as "Home Team Goals For (last6)", home_goc as "Home Team Goals Against (last6)", home_goal_sup as "Home Team Goal Superiority", ATeam as "Away Team", away_gos as "Away Team Goals For (last6)", away_goc as "Away Team Goals Against (last 6)", away_goal_sup as "Away Team Goal Superiority", match_rating as "Match Rating", hwin_prob as "Home Win Probability %", fair_odds as "Fair Odds"</query>
+        </search>
+        <format type="color" field="Match Rating">
+          <colorPalette type="map">{-2:#65A637, -1:#65A637, 0:#65A637, 1:#65A637, 2:#65A637}</colorPalette>
+          </format>
+      </table>
+    </panel>
   </row>
   <row>
     <panel>
@@ -1087,7 +1792,7 @@
         </format>
         <format type="color" field="avg_corners_over_10">
           <colorPalette type="expression">if (value &lt;= 30, "#FFBF00", "#ffffff")</colorPalette>
-        </format>        
+        </format>
         <format type="color" field="avg_corners_over_8">
           <colorPalette type="expression">if (value &gt;= 80, "#65A637", "#ffffff")</colorPalette>
         </format>
@@ -1123,7 +1828,7 @@
       <html>
         <h1>Game 9 - $game9_home$ v $game9_away$</h1>
                 <p>
-          <a href="head2head?form.home_team=$game9_home$&amp;form.away_team=$game9_away$" target="_blank">Link to head to head</a>
+          <a href="../search/head2head?form.home_team=$game9_home$&amp;form.away_team=$game9_away$" target="_blank">Link to head to head</a>
         </p>
       </html>
     </panel>
@@ -1138,9 +1843,22 @@
           <query>| table * | search (Team="$game9_home$" OR Team="$game9_away$") | fields Team, games, avg_goals, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent*</query>
         </search>
       </table>
-  </row>    
+  </row>
     <row>
     <panel><html><h1>Betting focus - Compound Averages</h1></html></panel>
+  </row>
+                  <row>
+    <panel>
+      <table>
+        <title>Home Win Analysis</title>
+        <search base="base_odds_search">
+          <query>| search (HomeTeam="$game9_home$" OR AwayTeam="$game9_home$") | eval HTeam="$game9_home$", gs=IF(HomeTeam="$game9_home$",FTHG,FTAG), gc=IF(AwayTeam="$game9_home$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as home_goals_s, sum(gc) as home_goals_c by HTeam | stats last(home_goals_s) as home_gos last(home_goals_c) as home_goc by HTeam | eval home_goal_sup=home_gos-home_goc| appendcols [| search index=football_21_22 Div=$division$ | reverse | search (HomeTeam="$game9_away$" OR AwayTeam="$game9_away$") | eval ATeam="$game9_away$", gs=IF(HomeTeam="$game9_away$",FTHG,FTAG), gc=IF(AwayTeam="$game9_away$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as away_goals_s, sum(gc) as away_goals_c by ATeam | stats last(away_goals_s) as away_gos last(away_goals_c) as away_goc by ATeam | eval away_goal_sup=away_gos-away_goc] | eval match_rating=home_goal_sup-away_goal_sup, hwin_prob=(1.56*match_rating)+46.47, fair_odds=100/hwin_prob | table HTeam, home_gos, home_goc, home_goal_sup, ATeam, away_gos, away_goc, away_goal_sup, match_rating, hwin_prob, fair_odds | rename HTeam as "Home Team", home_gos as "Home Team Goals For (last6)", home_goc as "Home Team Goals Against (last6)", home_goal_sup as "Home Team Goal Superiority", ATeam as "Away Team", away_gos as "Away Team Goals For (last6)", away_goc as "Away Team Goals Against (last 6)", away_goal_sup as "Away Team Goal Superiority", match_rating as "Match Rating", hwin_prob as "Home Win Probability %", fair_odds as "Fair Odds"</query>
+        </search>
+        <format type="color" field="Match Rating">
+          <colorPalette type="map">{-2:#65A637, -1:#65A637, 0:#65A637, 1:#65A637, 2:#65A637}</colorPalette>
+          </format>
+      </table>
+    </panel>
   </row>
   <row>
     <panel>
@@ -1215,7 +1933,7 @@
         </format>
         <format type="color" field="avg_corners_over_10">
           <colorPalette type="expression">if (value &lt;= 30, "#FFBF00", "#ffffff")</colorPalette>
-        </format>        
+        </format>
         <format type="color" field="avg_corners_over_8">
           <colorPalette type="expression">if (value &gt;= 80, "#65A637", "#ffffff")</colorPalette>
         </format>
@@ -1251,7 +1969,7 @@
       <html>
         <h1>Game 10 - $game10_home$ v $game10_away$</h1>
                 <p>
-          <a href="head2head?form.home_team=$game10_home$&amp;form.away_team=$game10_away$" target="_blank">Link to head to head</a>
+          <a href="../search/head2head?form.home_team=$game10_home$&amp;form.away_team=$game10_away$" target="_blank">Link to head to head</a>
         </p>
       </html>
     </panel>
@@ -1266,9 +1984,22 @@
           <query>| table * | search (Team="$game10_home$" OR Team="$game10_away$") | fields Team, games, avg_goals, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent*</query>
         </search>
       </table>
-  </row>    
+  </row>
     <row>
     <panel><html><h1>Betting focus - Compound Averages</h1></html></panel>
+  </row>
+                    <row>
+    <panel>
+      <table>
+        <title>Home Win Analysis</title>
+        <search base="base_odds_search">
+          <query>| search (HomeTeam="$game10_home$" OR AwayTeam="$game10_home$") | eval HTeam="$game10_home$", gs=IF(HomeTeam="$game10_home$",FTHG,FTAG), gc=IF(AwayTeam="$game10_home$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as home_goals_s, sum(gc) as home_goals_c by HTeam | stats last(home_goals_s) as home_gos last(home_goals_c) as home_goc by HTeam | eval home_goal_sup=home_gos-home_goc| appendcols [| search index=football_21_22 Div=$division$ | reverse | search (HomeTeam="$game10_away$" OR AwayTeam="$game10_away$") | eval ATeam="$game10_away$", gs=IF(HomeTeam="$game10_away$",FTHG,FTAG), gc=IF(AwayTeam="$game10_away$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as away_goals_s, sum(gc) as away_goals_c by ATeam | stats last(away_goals_s) as away_gos last(away_goals_c) as away_goc by ATeam | eval away_goal_sup=away_gos-away_goc] | eval match_rating=home_goal_sup-away_goal_sup, hwin_prob=(1.56*match_rating)+46.47, fair_odds=100/hwin_prob | table HTeam, home_gos, home_goc, home_goal_sup, ATeam, away_gos, away_goc, away_goal_sup, match_rating, hwin_prob, fair_odds | rename HTeam as "Home Team", home_gos as "Home Team Goals For (last6)", home_goc as "Home Team Goals Against (last6)", home_goal_sup as "Home Team Goal Superiority", ATeam as "Away Team", away_gos as "Away Team Goals For (last6)", away_goc as "Away Team Goals Against (last 6)", away_goal_sup as "Away Team Goal Superiority", match_rating as "Match Rating", hwin_prob as "Home Win Probability %", fair_odds as "Fair Odds"</query>
+        </search>
+        <format type="color" field="Match Rating">
+          <colorPalette type="map">{-2:#65A637, -1:#65A637, 0:#65A637, 1:#65A637, 2:#65A637}</colorPalette>
+          </format>
+      </table>
+    </panel>
   </row>
   <row>
     <panel>
@@ -1343,7 +2074,7 @@
         </format>
         <format type="color" field="avg_corners_over_10">
           <colorPalette type="expression">if (value &lt;= 30, "#FFBF00", "#ffffff")</colorPalette>
-        </format>        
+        </format>
         <format type="color" field="avg_corners_over_8">
           <colorPalette type="expression">if (value &gt;= 80, "#65A637", "#ffffff")</colorPalette>
         </format>
@@ -1379,7 +2110,7 @@
       <html>
         <h1>Game 11 - $game11_home$ v $game11_away$</h1>
                 <p>
-          <a href="head2head?form.home_team=$game11_home$&amp;form.away_team=$game11_away$" target="_blank">Link to head to head</a>
+          <a href="../search/head2head?form.home_team=$game11_home$&amp;form.away_team=$game11_away$" target="_blank">Link to head to head</a>
         </p>
       </html>
     </panel>
@@ -1394,9 +2125,22 @@
           <query>| table * | search (Team="$game11_home$" OR Team="$game11_away$") | fields Team, games, avg_goals, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent*</query>
         </search>
       </table>
-  </row>    
+  </row>
     <row>
     <panel><html><h1>Betting focus - Compound Averages</h1></html></panel>
+  </row>
+                      <row>
+    <panel>
+      <table>
+        <title>Home Win Analysis</title>
+        <search base="base_odds_search">
+          <query>| search (HomeTeam="$game11_home$" OR AwayTeam="$game11_home$") | eval HTeam="$game11_home$", gs=IF(HomeTeam="$game11_home$",FTHG,FTAG), gc=IF(AwayTeam="$game11_home$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as home_goals_s, sum(gc) as home_goals_c by HTeam | stats last(home_goals_s) as home_gos last(home_goals_c) as home_goc by HTeam | eval home_goal_sup=home_gos-home_goc| appendcols [| search index=football_21_22 Div=$division$ | reverse | search (HomeTeam="$game11_away$" OR AwayTeam="$game11_away$") | eval ATeam="$game11_away$", gs=IF(HomeTeam="$game11_away$",FTHG,FTAG), gc=IF(AwayTeam="$game11_away$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as away_goals_s, sum(gc) as away_goals_c by ATeam | stats last(away_goals_s) as away_gos last(away_goals_c) as away_goc by ATeam | eval away_goal_sup=away_gos-away_goc] | eval match_rating=home_goal_sup-away_goal_sup, hwin_prob=(1.56*match_rating)+46.47, fair_odds=100/hwin_prob | table HTeam, home_gos, home_goc, home_goal_sup, ATeam, away_gos, away_goc, away_goal_sup, match_rating, hwin_prob, fair_odds | rename HTeam as "Home Team", home_gos as "Home Team Goals For (last6)", home_goc as "Home Team Goals Against (last6)", home_goal_sup as "Home Team Goal Superiority", ATeam as "Away Team", away_gos as "Away Team Goals For (last6)", away_goc as "Away Team Goals Against (last 6)", away_goal_sup as "Away Team Goal Superiority", match_rating as "Match Rating", hwin_prob as "Home Win Probability %", fair_odds as "Fair Odds"</query>
+        </search>
+        <format type="color" field="Match Rating">
+          <colorPalette type="map">{-2:#65A637, -1:#65A637, 0:#65A637, 1:#65A637, 2:#65A637}</colorPalette>
+          </format>
+      </table>
+    </panel>
   </row>
   <row>
     <panel>
@@ -1471,7 +2215,7 @@
         </format>
         <format type="color" field="avg_corners_over_10">
           <colorPalette type="expression">if (value &lt;= 30, "#FFBF00", "#ffffff")</colorPalette>
-        </format>        
+        </format>
         <format type="color" field="avg_corners_over_8">
           <colorPalette type="expression">if (value &gt;= 80, "#65A637", "#ffffff")</colorPalette>
         </format>
@@ -1507,7 +2251,7 @@
       <html>
         <h1>Game 12 - $game12_home$ v $game12_away$</h1>
                 <p>
-          <a href="head2head?form.home_team=$game12_home$&amp;form.away_team=$game12_away$" target="_blank">Link to head to head</a>
+          <a href="../search/head2head?form.home_team=$game12_home$&amp;form.away_team=$game12_away$" target="_blank">Link to head to head</a>
         </p>
       </html>
     </panel>
@@ -1522,9 +2266,22 @@
           <query>| table * | search (Team="$game12_home$" OR Team="$game12_away$") | fields Team, games, avg_goals, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent*</query>
         </search>
       </table>
-  </row>    
+  </row>
     <row>
     <panel><html><h1>Betting focus - Compound Averages</h1></html></panel>
+  </row>
+                     <row>
+    <panel>
+      <table>
+        <title>Home Win Analysis</title>
+        <search base="base_odds_search">
+          <query>| search (HomeTeam="$game12_home$" OR AwayTeam="$game12_home$") | eval HTeam="$game12_home$", gs=IF(HomeTeam="$game12_home$",FTHG,FTAG), gc=IF(AwayTeam="$game12_home$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as home_goals_s, sum(gc) as home_goals_c by HTeam | stats last(home_goals_s) as home_gos last(home_goals_c) as home_goc by HTeam | eval home_goal_sup=home_gos-home_goc| appendcols [| search index=football_21_22 Div=$division$ | reverse | search (HomeTeam="$game12_away$" OR AwayTeam="$game12_away$") | eval ATeam="$game12_away$", gs=IF(HomeTeam="$game12_away$",FTHG,FTAG), gc=IF(AwayTeam="$game12_away$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as away_goals_s, sum(gc) as away_goals_c by ATeam | stats last(away_goals_s) as away_gos last(away_goals_c) as away_goc by ATeam | eval away_goal_sup=away_gos-away_goc] | eval match_rating=home_goal_sup-away_goal_sup, hwin_prob=(1.56*match_rating)+46.47, fair_odds=100/hwin_prob | table HTeam, home_gos, home_goc, home_goal_sup, ATeam, away_gos, away_goc, away_goal_sup, match_rating, hwin_prob, fair_odds | rename HTeam as "Home Team", home_gos as "Home Team Goals For (last6)", home_goc as "Home Team Goals Against (last6)", home_goal_sup as "Home Team Goal Superiority", ATeam as "Away Team", away_gos as "Away Team Goals For (last6)", away_goc as "Away Team Goals Against (last 6)", away_goal_sup as "Away Team Goal Superiority", match_rating as "Match Rating", hwin_prob as "Home Win Probability %", fair_odds as "Fair Odds"</query>
+        </search>
+        <format type="color" field="Match Rating">
+          <colorPalette type="map">{-2:#65A637, -1:#65A637, 0:#65A637, 1:#65A637, 2:#65A637}</colorPalette>
+          </format>
+      </table>
+    </panel>
   </row>
   <row>
     <panel>
@@ -1599,7 +2356,7 @@
         </format>
         <format type="color" field="avg_corners_over_10">
           <colorPalette type="expression">if (value &lt;= 30, "#FFBF00", "#ffffff")</colorPalette>
-        </format>        
+        </format>
         <format type="color" field="avg_corners_over_8">
           <colorPalette type="expression">if (value &gt;= 80, "#65A637", "#ffffff")</colorPalette>
         </format>
