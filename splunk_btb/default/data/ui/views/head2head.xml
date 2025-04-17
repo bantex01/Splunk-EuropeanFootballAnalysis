@@ -1,8 +1,26 @@
-<form>
+<form version="1.0.0">
   <label>head2head</label>
+  <search id="baselast6">
+    <query>
+      index=football_24_25 | reverse | table *
+    </query>
+  </search>
+  <search id="baseRef">
+    <query>
+      index=football* Div IN ("E0","E1","E2","E3","EC","SC0","SC1","SC2","SC3","SC3") | eval total_yellows=HY+AY, total_reds=HR+AR | fields *
+    </query>
+  </search>
   <search id="charts_search">
     <query>
-      index=football_19_20 (HomeTeam="$home_team$" OR AwayTeam="$away_team$") | fields *
+      index=football_24_25 (HomeTeam="$home_team$" OR AwayTeam="$away_team$") | fields *
+    </query>
+  </search>
+  <search id="base_home_team_search">
+    <query>index=football_24_25  (HomeTeam="$home_team$" OR AwayTeam="$home_team$") | eval Team="$home_team$" | fields * <!--| eval under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR) | stats avg(cards_total) as avg_cards, avg(HC) as avg_corners, avg(FTHG) as avg_goals, count as games, sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 | eval percent_under_2_5_goals = (under_2_5_goals / games) * 100, percent_over_2_5_goals = (over_2_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100-->
+    </query>
+  </search>
+  <search id="base_away_team_search">
+    <query>index=football_24_25  (HomeTeam="$away_team$" OR AwayTeam="$away_team$") | eval Team="$away_team$"  | fields * <!--| eval under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR) | stats avg(cards_total) as avg_cards, avg(HC) as avg_corners, avg(FTHG) as avg_goals, count as games, sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 | eval percent_under_2_5_goals = (under_2_5_goals / games) * 100, percent_over_2_5_goals = (over_2_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100-->
     </query>
   </search>
   <search id="base_stats_search">
@@ -11,8 +29,23 @@
     <latest>now</latest>
     <sampleRatio>1</sampleRatio>
   </search>
+    <search id="base_stats_search_history">
+    <query>`base_stats_search_history(1,2.5,10,5.5,4.39,1.26,1,1,1.83,1)` | fields *</query>
+    <earliest>1</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
   <search id="base_h2h_search">
-    <query>index=football_19_20 HomeTeam="$home_team$" | eval under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR) | stats avg(cards_total) as avg_cards, avg(HC) as avg_corners, avg(FTHG) as avg_goals, count as games, sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 by HomeTeam | rename HomeTeam as Team | append [search index=football_19_20 AwayTeam="$away_team$" | eval under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(AY+AR) | stats avg(cards_total) as avg_cards, avg(AC) as avg_corners, avg(FTAG) as avg_goals, count as games, sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 by AwayTeam | rename AwayTeam as Team] | eval percent_under_2_5_goals = (under_2_5_goals / games) * 100, percent_over_2_5_goals = (over_2_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100</query>
+    <query>index=football_24_25 HomeTeam="$home_team$" | eval under_3_5_goals=if(FTHG+FTAG&lt;3.5,1,0), over_3_5_goals=if(FTHG+FTAG&gt;3.5,1,0),under_1_5_goals=if(FTHG+FTAG&lt;1.5,1,0), over_1_5_goals=if(FTHG+FTAG&gt;1.5,1,0),       under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR)
+    
+    | stats avg(cards_total) as avg_cards, avg(HC) as avg_corners, avg(FTHG) as avg_goals, count as games,sum(under_3_5_goals) as under_3_5_goals, sum(over_3_5_goals) as over_3_5_goals,sum(under_1_5_goals) as under_1_5_goals, sum(over_1_5_goals) as over_1_5_goals ,   sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5, avg(FTAG) as avg_goals_conceded, avg(AC) as avg_corners_conceded, avg(HTHG) as avg_ht_goals_scored, avg(HTAG) as avg_ht_goals_conceded by HomeTeam | rename HomeTeam as Team 
+    
+    | append [search index=football_24_25 AwayTeam="$away_team$" | eval under_3_5_goals=if(FTHG+FTAG&lt;3.5,1,0), over_3_5_goals=if(FTHG+FTAG&gt;3.5,1,0),under_1_5_goals=if(FTHG+FTAG&lt;1.5,1,0), over_1_5_goals=if(FTHG+FTAG&gt;1.5,1,0),       under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0),    under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(AY+AR) 
+    
+    | stats avg(cards_total) as avg_cards, avg(AC) as avg_corners, avg(FTAG) as avg_goals, count as games, sum(under_3_5_goals) as under_3_5_goals, sum(over_3_5_goals) as over_3_5_goals,sum(under_1_5_goals) as under_1_5_goals, sum(over_1_5_goals) as over_1_5_goals,    sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5, avg(FTHG) as avg_goals_conceded, avg(HC) as avg_corners_conceded, avg(HTAG) as avg_ht_goals_scored, avg(HTHG) as avg_ht_goals_conceded by AwayTeam | rename AwayTeam as Team] 
+    
+    
+    | eval percent_under_3_5_goals = (under_3_5_goals / games) * 100, percent_over_3_5_goals = (over_3_5_goals / games) * 100,    percent_under_1_5_goals = (under_1_5_goals / games) * 100, percent_over_1_5_goals = (over_1_5_goals / games) * 100,    percent_under_2_5_goals = (under_2_5_goals / games) * 100, percent_over_2_5_goals = (over_2_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100</query>
     <earliest>1</earliest>
     <latest>now</latest>
     <sampleRatio>1</sampleRatio>
@@ -50,8 +83,6 @@
         <search base="base_stats_search">
           <query>| dedup HomeTeam | fields HomeTeam | table *</query>
         </search>
-        <default>Liverpool</default>
-        <initialValue>Liverpool</initialValue>
       </input>
       <input type="dropdown" searchWhenChanged="true" token="away_team">
         <label>Away Team</label>
@@ -60,14 +91,20 @@
         <search base="base_stats_search">
           <query>| dedup AwayTeam | fields AwayTeam | table *</query>
         </search>
-        <default>Man United</default>
-        <initialValue>Man United</initialValue>
       </input>
       <table>
-        <title>Previous Fixture(s)</title>
+        <title>Previous Fixture(s) - This Season</title>
         <search base="base_stats_search">
           <query>
-          | search (HomeTeam="$home_team$" OR HomeTeam="$away_team$") AND (AwayTeam="$home_team$" OR AwayTeam="$away_team$") | table Date, HomeTeam, AwayTeam, FTHG, FTAG, CORNERS, CARDS_BET_TOTAL_CARDS | rename FTHG as "Home Goals", FTAG as "Away Goals", CORNERS as Corners, CARDS_BET_TOTAL_CARDS as "Total Cards"
+          | search (HomeTeam="$home_team$" OR HomeTeam="$away_team$") AND (AwayTeam="$home_team$" OR AwayTeam="$away_team$") | table Date, HomeTeam, AwayTeam, HTHG, HTAG, FTHG, FTAG, CORNERS, CARDS_BET_TOTAL_CARDS, Avglt2_5, Maxlt2_5 | rename HTHG as "HT Home Goals", HTAG as "HT Away Goals", FTHG as "Home Goals", FTAG as "Away Goals", CORNERS as Corners, CARDS_BET_TOTAL_CARDS as "Total Cards"
+        </query>
+        </search>
+      </table>
+      <table>
+        <title>Previous Fixture(s) - All Seasons</title>
+        <search base="base_stats_search_history">
+          <query>
+          | search (HomeTeam="$home_team$" OR HomeTeam="$away_team$") AND (AwayTeam="$home_team$" OR AwayTeam="$away_team$") | table Date, HomeTeam, AwayTeam, HTHG, HTAG, FTHG, FTAG, CORNERS, CARDS_BET_TOTAL_CARDS, Avglt2_5, Maxlt2_5 | rename HTHG as "HT Home Goals", HTAG as "HT Away Goals", FTHG as "Home Goals", FTAG as "Away Goals", CORNERS as Corners, CARDS_BET_TOTAL_CARDS as "Total Cards" | sort - Date | head 10
         </query>
         </search>
       </table>
@@ -75,17 +112,290 @@
   </row>
   <row>
     <panel>
+      <input type="radio" token="season_home" searchWhenChanged="true">
+        <label>Show Season:</label>
+        <choice value="no">No</choice>
+        <choice value="yes">Yes</choice>
+        <change>
+          <condition value="no">
+            <unset token="show_season_home"></unset>
+          </condition>
+          <condition value="yes">
+            <set token="show_season_home">true</set>
+          </condition>
+        </change>
+        <default>no</default>
+        <initialValue>no</initialValue>
+      </input>
+      <table>
+        <title>Last 6 Results - $home_team$</title>
+        <search base="baselast6">
+          <query>|  search (HomeTeam="$home_team$" OR AwayTeam="$home_team$") | streamstats count as match_number | eventstats latest(match_number) as last_match | eval start=last_match-6 | table Date, HomeTeam, AwayTeam, HTHG, HTAG, FTHG, FTAG, match_number, last_match, start | eval keep=if(match_number&gt;start,"yes","no") | search keep="yes" | fields - match_number, last_match, start, keep | eval Result=case(HomeTeam="$home_team$" AND FTHG&gt;FTAG,"W",HomeTeam="$home_team$" AND FTHG&lt;FTAG,"L",FTHG==FTAG,"D",AwayTeam="$home_team$" AND FTAG&gt;FTHG,"W", AwayTeam="$home_team$" AND FTHG&gt;FTAG,"L",1=1,"NA")</query>
+        </search>
+        <option name="count">50</option>
+        <option name="drilldown">none</option>
+        <format type="color" field="Result">
+          <colorPalette type="map">{"W":#65A637,"L":#FF0000,"D":#FFA500}</colorPalette>
+        </format>
+      </table>
+    </panel>
+    <panel>
+      <input type="radio" token="show_season_away" searchWhenChanged="true">
+        <label>Show season:</label>
+        <choice value="no">No</choice>
+        <choice value="yes">Yes</choice>
+        <change>
+          <condition value="no">
+            <unset token="show_season_away"></unset>
+          </condition>
+          <condition value="yes">
+            <set token="show_season_away">true</set>
+          </condition>
+        </change>
+        <initialValue>no</initialValue>
+        <default>no</default>
+      </input>
+      <table>
+        <title>Last 6 Results - $away_team$</title>
+        <search base="baselast6">
+          <query>| search (HomeTeam="$away_team$" OR AwayTeam="$away_team$") | streamstats count as match_number | eventstats latest(match_number) as last_match | eval start=last_match-6 | table Date, HomeTeam, AwayTeam, HTHG, HTAG, FTHG, FTAG, match_number, last_match, start | eval keep=if(match_number&gt;start,"yes","no") | search keep="yes" | fields - match_number, last_match, start, keep | eval Result=case(HomeTeam="$away_team$" AND FTHG&gt;FTAG,"W",HomeTeam="$away_team$" AND FTHG&lt;FTAG,"L",FTHG==FTAG,"D",AwayTeam="$away_team$" AND FTAG&gt;FTHG,"W", AwayTeam="$away_team$" AND FTHG&gt;FTAG,"L",1=1,"NA")</query>
+        </search>
+        <option name="count">50</option>
+        <option name="drilldown">none</option>
+        <option name="wrap">true</option>
+        <format type="color" field="Result">
+          <colorPalette type="map">{"W":#65A637,"L":#FF0000,"D":#FFA500}</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel depends="$show_season_home$">
+      <table>
+        <title>Season Results - $home_team$</title>
+        <search base="baselast6">
+          <query>|  search (HomeTeam="$home_team$" OR AwayTeam="$home_team$") | table Date, HomeTeam, AwayTeam,  Avglt2_5, Maxlt2_5, HTHG, HTAG, FTHG, FTAG | eval Result=case(HomeTeam="$home_team$" AND FTHG&gt;FTAG,"W",HomeTeam="$home_team$" AND FTHG&lt;FTAG,"L",FTHG==FTAG,"D",AwayTeam="$home_team$" AND FTAG&gt;FTHG,"W", AwayTeam="$home_team$" AND FTHG&gt;FTAG,"L",1=1,"NA")</query>
+        </search>
+        <option name="count">50</option>
+        <option name="drilldown">none</option>
+        <format type="color" field="Result">
+          <colorPalette type="map">{"W":#65A637,"L":#FF0000,"D":#FFA500}</colorPalette>
+        </format>
+      </table>
+    </panel>
+    <panel depends="$show_season_away$">
+      <table>
+        <title>Season Results - $away_team$</title>
+        <search base="baselast6">
+          <query>| search (HomeTeam="$away_team$" OR AwayTeam="$away_team$") | table Date, HomeTeam, AwayTeam,  Avglt2_5, Maxlt2_5, HTHG, HTAG, FTHG, FTAG | eval Result=case(HomeTeam="$away_team$" AND FTHG&gt;FTAG,"W",HomeTeam="$away_team$" AND FTHG&lt;FTAG,"L",FTHG==FTAG,"D",AwayTeam="$away_team$" AND FTAG&gt;FTHG,"W", AwayTeam="$away_team$" AND FTHG&gt;FTAG,"L",1=1,"NA")</query>
+        </search>
+        <option name="count">50</option>
+        <option name="drilldown">none</option>
+        <format type="color" field="Result">
+          <colorPalette type="map">{"W":#65A637,"L":#FF0000,"D":#FFA500}</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Last 6 Form</title>
+        <search base="baselast6">
+          <query>| search (HomeTeam="$home_team$" OR AwayTeam="$home_team$") | eval HTeam="$home_team$", gs=IF(HomeTeam="$home_team$",FTHG,FTAG), gc=IF(AwayTeam="$home_team$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as home_goals_s, sum(gc) as home_goals_c, sum(Avglt2_5) as avglt2_5 by HTeam | stats last(home_goals_s) as home_gos last(home_goals_c) as home_goc, last(avglt2_5) as home_avglt2_5 by HTeam | eval home_goal_sup=home_gos-home_goc| appendcols [| search index=football_24_25 | reverse | search (HomeTeam="$away_team$" OR AwayTeam="$away_team$") | eval ATeam="$away_team$", gs=IF(HomeTeam="$away_team$",FTHG,FTAG), gc=IF(AwayTeam="$away_team$",FTHG,FTAG) | streamstats window=6 global=f sum(gs) as away_goals_s, sum(gc) as away_goals_c, sum(Avglt2_5) as avglt2_5 by ATeam | stats last(away_goals_s) as away_gos last(away_goals_c) as away_goc, last(avglt2_5) as away_avglt2_5 by ATeam | eval away_goal_sup=away_gos-away_goc] | eval match_rating=home_goal_sup-away_goal_sup, hwin_prob=(1.56*match_rating)+46.47, fair_odds=100/hwin_prob | table HTeam, home_gos, home_goc, home_goal_sup, home_avglt2_5, ATeam, away_gos, away_goc, away_goal_sup, away_avglt2_5, match_rating, hwin_prob, fair_odds | rename HTeam as "Home Team", home_gos as "Home Team Goals For (last6)", home_goc as "Home Team Goals Against (last6)", home_goal_sup as "Home Team Goal Superiority", ATeam as "Away Team", away_gos as "Away Team Goals For (last6)", away_goc as "Away Team Goals Against (last 6)", away_goal_sup as "Away Team Goal Superiority", match_rating as "Match Rating", hwin_prob as "Home Win Probability %", fair_odds as "Fair Odds" | eval comp_lt2_5=(home_avglt2_5+away_avglt2_5)/12, home_avglt2_5=home_avglt2_5/6, away_avglt2_5=away_avglt2_5/6 | rename home_avglt2_5 as "Home Avg &lt;2.5", away_avglt2_5 as "Away Avg &lt;2.5", comp_lt2_5 as "Compound &lt;2.5"</query>
+        </search>
+        <option name="count">10</option>
+        <option name="refresh.display">progressbar</option>
+        <format type="color" field="Match Rating">
+          <colorPalette type="map">{-2:#65A637, -1:#65A637, 0:#65A637, 1:#65A637, 2:#65A637}</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
       <html>
-        <h1>Compund Average Percentages</h1>
+        <h1>Season Performance</h1>
       </html>
     </panel>
   </row>
   <row>
     <panel>
       <table>
-        <title>Goals</title>
-        <search base="base_h2h_search">
-          <query>| stats avg(percent_under_2_5_goals) as avg_goals_under_2_5, avg(percent_over_2_5_goals) as avg_goals_over_2_5 | eval avg_goals_under_2_5=round(avg_goals_under_2_5,2), avg_goals_over_2_5=round(avg_goals_over_2_5,2)</query>
+        <title>Statistics - $home_team$ v $away_team$ - Season Analysis</title>
+        <search base="base_home_team_search">
+          <query>| eval under_1_5_goals=if(FTHG+FTAG&lt;1.5,1,0), over_1_5_goals=if(FTHG+FTAG&gt;1.5,1,0), under_3_5_goals=if(FTHG+FTAG&lt;3.5,1,0), over_3_5_goals=if(FTHG+FTAG&gt;3.5,1,0),      team_goals=if(HomeTeam=Team,FTHG,FTAG), team_corners=if(HomeTeam=Team,HC,AC), team_cards=if(HomeTeam=Team,HY+HR,AY+AR), under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR), ht_goals_conceded=if(HomeTeam=Team,HTAG,HTHG), ht_goals_scored=if(HomeTeam=Team,HTHG,HTAG), goals_conceded=if(HomeTeam=Team,FTAG,FTHG) 
+          
+          
+          | stats avg(team_cards) as avg_cards, avg(team_corners) as avg_corners, avg(team_goals) as avg_goals, count as games, sum(under_3_5_goals) as under_3_5_goals, sum(over_3_5_goals) as over_3_5_goals,sum(under_1_5_goals) as under_1_5_goals, sum(over_1_5_goals) as over_1_5_goals,    sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5, avg(ht_goals_conceded) as avg_ht_goals_conceded, avg(ht_goals_scored) as avg_ht_goals_scored, avg(goals_conceded) as avg_goals_conceded by Team 
+          
+          | eval  percent_under_3_5_goals = (under_3_5_goals / games) * 100, percent_over_3_5_goals = (over_3_5_goals / games) * 100,    percent_under_1_5_goals = (under_1_5_goals / games) * 100, percent_over_1_5_goals = (over_1_5_goals / games) * 100,     percent_under_2_5_goals = (under_2_5_goals / games) * 100, percent_over_2_5_goals = (over_2_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100 | table * | fields Team, games, avg_goals, avg_ht*, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent* 
+          
+          | eval percent_over_1_5_goals=round(percent_over_1_5_goals,2), percent_under_1_5_goals=round(percent_under_1_5_goals,2), percent_over_3_5_goals=round(percent_over_3_5_goals,2), percent_under_3_5_goals=round(percent_under_3_5_goals,2),       avg_goals=round(avg_goals,2), avg_corners=round(avg_corners,2), avg_cards=round(avg_cards,2), percent_over_2_5_goals=round(percent_over_2_5_goals,2), percent_under_2_5_goals=round(percent_under_2_5_goals,2), percent_corners_over_8=round(percent_corners_over_8,2), percent_corners_over_9=round(percent_corners_over_9,2), percent_corners_over_10=round(percent_corners_over_10,2), percent_btts_yes=round(percent_btts_yes,2), percent_btts_no=round(percent_btts_no,2), percent_cards_over_3_5=round(percent_cards_over_3_5,2), percent_cards_over_4_5=round(percent_cards_over_4_5,2), percent_cards_over_5_5=round(percent_cards_over_5_5,2), percent_cards_under_3_5=round(percent_cards_under_3_5,2), percent_cards_under_4_5=round(percent_cards_under_4_5,2), percent_cards_under_5_5=round(percent_cards_under_5_5,2), avg_ht_goals_conceded=round(avg_ht_goals_conceded,3), avg_ht_goals_scored=round(avg_ht_goals_scored,3), avg_corners_conceded=round(avg_corners_conceded,3), avg_goals_conceded=round(avg_goals_conceded,3)
+          
+          
+          
+          
+          | append [search index=football_24_25  (HomeTeam="$away_team$" OR AwayTeam="$away_team$") | eval Team="$away_team$"  | fields * | eval team_goals=if(HomeTeam=Team,FTHG,FTAG), team_corners=if(HomeTeam=Team,HC,AC), team_cards=if(HomeTeam=Team,HY+HR,AY+AR), under_1_5_goals=if(FTHG+FTAG&lt;1.5,1,0), over_1_5_goals=if(FTHG+FTAG&gt;1.5,1,0), under_3_5_goals=if(FTHG+FTAG&lt;3.5,1,0), over_3_5_goals=if(FTHG+FTAG&gt;3.5,1,0),     under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR), ht_goals_conceded=if(HomeTeam=Team,HTAG,HTHG), ht_goals_scored=if(HomeTeam=Team,HTHG,HTAG), goals_conceded=if(HomeTeam=Team,FTAG,FTHG)  
+          
+          
+          | stats avg(team_cards) as avg_cards, avg(team_corners) as avg_corners, avg(team_goals) as avg_goals, count as games,  sum(under_3_5_goals) as under_3_5_goals, sum(over_3_5_goals) as over_3_5_goals,sum(under_1_5_goals) as under_1_5_goals, sum(over_1_5_goals) as over_1_5_goals,    sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5, avg(ht_goals_conceded) as avg_ht_goals_conceded, avg(ht_goals_scored) as avg_ht_goals_scored, avg(goals_conceded) as avg_goals_conceded by Team 
+          
+          | eval percent_under_3_5_goals = (under_3_5_goals / games) * 100, percent_over_3_5_goals = (over_3_5_goals / games) * 100,    percent_under_1_5_goals = (under_1_5_goals / games) * 100, percent_over_1_5_goals = (over_1_5_goals / games) * 100,     percent_under_2_5_goals = (under_2_5_goals / games) * 100, percent_over_2_5_goals = (over_2_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100 | table * | fields Team, games, avg_goals, avg_ht*, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent* 
+          
+          | eval percent_over_1_5_goals=round(percent_over_1_5_goals,2), percent_under_1_5_goals=round(percent_under_1_5_goals,2), percent_over_3_5_goals=round(percent_over_3_5_goals,2), percent_under_3_5_goals=round(percent_under_3_5_goals,2),    avg_goals=round(avg_goals,2), avg_corners=round(avg_corners,2), avg_cards=round(avg_cards,2), percent_over_2_5_goals=round(percent_over_2_5_goals,2), percent_under_2_5_goals=round(percent_under_2_5_goals,2), percent_corners_over_8=round(percent_corners_over_8,2), percent_corners_over_9=round(percent_corners_over_9,2), percent_corners_over_10=round(percent_corners_over_10,2), percent_btts_yes=round(percent_btts_yes,2), percent_btts_no=round(percent_btts_no,2), percent_cards_over_3_5=round(percent_cards_over_3_5,2), percent_cards_over_4_5=round(percent_cards_over_4_5,2), percent_cards_over_5_5=round(percent_cards_over_5_5,2), percent_cards_under_3_5=round(percent_cards_under_3_5,2), percent_cards_under_4_5=round(percent_cards_under_4_5,2), percent_cards_under_5_5=round(percent_cards_under_5_5,2), avg_ht_goals_conceded=round(avg_ht_goals_conceded,3), avg_ht_goals_scored=round(avg_ht_goals_scored,3), avg_corners_conceded=round(avg_corners_conceded,3), avg_goals_conceded=round(avg_goals_conceded,3)]</query>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Goals - $home_team$ - 1.5</title>
+        <search base="base_home_team_search">
+          <query>| eval under_1_5_goals=if(FTHG+FTAG&lt;1.5,1,0), over_1_5_goals=if(FTHG+FTAG&gt;1.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR) 
+          
+          
+          | stats avg(cards_total) as avg_cards, avg(HC) as avg_corners, avg(FTHG) as avg_goals, count as games, sum(under_1_5_goals) as under_1_5_goals, sum(over_1_5_goals) as over_1_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 
+          
+          | eval percent_under_1_5_goals = (under_1_5_goals / games) * 100, percent_over_1_5_goals = (over_1_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100 | stats avg(percent_under_1_5_goals) as avg_goals_under_1_5, avg(percent_over_1_5_goals) as avg_goals_over_1_5 | eval avg_goals_under_1_5=round(avg_goals_under_1_5,2), avg_goals_over_1_5=round(avg_goals_over_1_5,2)</query>
+        </search>
+        <option name="count">10</option>
+        <format type="color" field="avg_goals_under_1_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_goals_over_1_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Goals - $away_team$ - 1.5</title>
+        <search base="base_away_team_search">
+          <query>| eval under_1_5_goals=if(FTHG+FTAG&lt;1.5,1,0), over_1_5_goals=if(FTHG+FTAG&gt;1.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR) 
+          
+          
+          | stats avg(cards_total) as avg_cards, avg(HC) as avg_corners, avg(FTHG) as avg_goals, count as games, sum(under_1_5_goals) as under_1_5_goals, sum(over_1_5_goals) as over_1_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 
+          
+          
+          | eval percent_under_1_5_goals = (under_1_5_goals / games) * 100, percent_over_1_5_goals = (over_1_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100 
+          
+          | stats avg(percent_under_1_5_goals) as avg_goals_under_1_5, avg(percent_over_1_5_goals) as avg_goals_over_1_5 | eval avg_goals_under_1_5=round(avg_goals_under_1_5,2), avg_goals_over_1_5=round(avg_goals_over_1_5,2)</query>
+        </search>
+        <option name="count">10</option>
+        <format type="color" field="avg_goals_under_1_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_goals_over_1_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Goals - $home_team$ - 2.5</title>
+        <search base="base_home_team_search">
+          <query>| eval under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR) 
+          
+          
+          | stats avg(cards_total) as avg_cards, avg(HC) as avg_corners, avg(FTHG) as avg_goals, count as games, sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 
+          
+          | eval percent_under_2_5_goals = (under_2_5_goals / games) * 100, percent_over_2_5_goals = (over_2_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100 | stats avg(percent_under_2_5_goals) as avg_goals_under_2_5, avg(percent_over_2_5_goals) as avg_goals_over_2_5 | eval avg_goals_under_2_5=round(avg_goals_under_2_5,2), avg_goals_over_2_5=round(avg_goals_over_2_5,2)</query>
+        </search>
+        <option name="count">10</option>
+        <format type="color" field="avg_goals_under_2_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_goals_over_2_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Goals - $away_team$ - 2.5</title>
+        <search base="base_away_team_search">
+          <query>| eval under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR) 
+          
+          
+          | stats avg(cards_total) as avg_cards, avg(HC) as avg_corners, avg(FTHG) as avg_goals, count as games, sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 
+          
+          
+          | eval percent_under_2_5_goals = (under_2_5_goals / games) * 100, percent_over_2_5_goals = (over_2_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100 
+          
+          | stats avg(percent_under_2_5_goals) as avg_goals_under_2_5, avg(percent_over_2_5_goals) as avg_goals_over_2_5 | eval avg_goals_under_2_5=round(avg_goals_under_2_5,2), avg_goals_over_2_5=round(avg_goals_over_2_5,2)</query>
+        </search>
+        <option name="count">10</option>
+        <format type="color" field="avg_goals_under_2_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_goals_over_2_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Goals - $home_team$ - 3.5</title>
+        <search base="base_home_team_search">
+          <query>| eval under_3_5_goals=if(FTHG+FTAG&lt;3.5,1,0), over_3_5_goals=if(FTHG+FTAG&gt;3.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR) 
+          
+          
+          | stats avg(cards_total) as avg_cards, avg(HC) as avg_corners, avg(FTHG) as avg_goals, count as games, sum(under_3_5_goals) as under_3_5_goals, sum(over_3_5_goals) as over_3_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 
+          
+          | eval percent_under_3_5_goals = (under_3_5_goals / games) * 100, percent_over_3_5_goals = (over_3_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100 | stats avg(percent_under_3_5_goals) as avg_goals_under_3_5, avg(percent_over_3_5_goals) as avg_goals_over_3_5 | eval avg_goals_under_3_5=round(avg_goals_under_3_5,2), avg_goals_over_3_5=round(avg_goals_over_3_5,2)</query>
+        </search>
+        <option name="count">10</option>
+        <format type="color" field="avg_goals_under_3_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_goals_over_3_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Goals - $away_team$ - 3.5</title>
+        <search base="base_away_team_search">
+          <query>| eval under_3_5_goals=if(FTHG+FTAG&lt;3.5,1,0), over_3_5_goals=if(FTHG+FTAG&gt;3.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR) 
+          
+          
+          | stats avg(cards_total) as avg_cards, avg(HC) as avg_corners, avg(FTHG) as avg_goals, count as games, sum(under_3_5_goals) as under_3_5_goals, sum(over_3_5_goals) as over_3_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 
+          
+          
+          | eval percent_under_3_5_goals = (under_3_5_goals / games) * 100, percent_over_3_5_goals = (over_3_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100 
+          
+          | stats avg(percent_under_3_5_goals) as avg_goals_under_3_5, avg(percent_over_3_5_goals) as avg_goals_over_3_5 | eval avg_goals_under_3_5=round(avg_goals_under_3_5,2), avg_goals_over_3_5=round(avg_goals_over_3_5,2)</query>
+        </search>
+        <option name="count">10</option>
+        <format type="color" field="avg_goals_under_3_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_goals_over_3_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Goals - BTTS - $home_team$</title>
+        <search base="base_home_team_search">
+          <query>| eval under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR) 
+          
+          
+          | stats avg(cards_total) as avg_cards, avg(HC) as avg_corners, avg(FTHG) as avg_goals, count as games, sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 
+          
+          | eval percent_under_2_5_goals = (under_2_5_goals / games) * 100, percent_over_2_5_goals = (over_2_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100 
+          
+          | stats avg(percent_btts_no) as avg_btts_no, avg(percent_btts_yes) as avg_btts_yes | eval avg_btts_no=round(avg_btts_no,2), avg_btts_yes=round(avg_btts_yes,2)</query>
         </search>
         <format type="color" field="avg_goals_under_2_5">
           <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
@@ -97,7 +407,203 @@
     </panel>
     <panel>
       <table>
-        <title>BTTS</title>
+        <title>Goals - BTTS - $away_team$</title>
+        <search base="base_away_team_search">
+          <query>| eval under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR) 
+          
+          | stats avg(cards_total) as avg_cards, avg(HC) as avg_corners, avg(FTHG) as avg_goals, count as games, sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 
+          
+          | eval percent_under_2_5_goals = (under_2_5_goals / games) * 100, percent_over_2_5_goals = (over_2_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100 
+          
+          | stats avg(percent_btts_no) as avg_btts_no, avg(percent_btts_yes) as avg_btts_yes | eval avg_btts_no=round(avg_btts_no,2), avg_btts_yes=round(avg_btts_yes,2)</query>
+        </search>
+        <format type="color" field="avg_goals_under_2_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_goals_over_2_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Goals - $home_team$</title>
+        <search type="annotation" base="base_home_team_search">
+          <query>| eval annotation_label = HomeTeam . ":" . AwayTeam</query>
+        </search>
+        <search base="base_home_team_search">
+          <query>
+           | eval Total_Goals=FTHG+FTAG | eval home_team_goals=IF(HomeTeam="$home_team$",FTHG,FTAG) | timechart span=1d max(Total_Goals) as Total_Goals max(home_team_goals) as "$home_team$"_Goals
+          </query>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.legend.placement">bottom</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Goals - $away_team$</title>
+        <search type="annotation" base="base_away_team_search">
+          <query>| eval annotation_label = HomeTeam . ":" . AwayTeam</query>
+        </search>
+        <search base="base_away_team_search">
+          <query>
+           | eval Total_Goals=FTHG+FTAG | eval away_team_goals=IF(HomeTeam="$away_team$",FTHG,FTAG) | timechart span=1d max(Total_Goals) as Total_Goals max(away_team_goals) as "$away_team$"_Goals
+          </query>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.legend.placement">bottom</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Cards - $home_team$ v $away_team$ - Season Analysis</title>
+        <search base="base_home_team_search">
+          <query>
+            
+            | eval team_goals=if(HomeTeam=Team,FTHG,FTAG), team_corners=if(HomeTeam=Team,HC,AC), team_cards=if(HomeTeam=Team,HY+HR,AY+AR), under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR) | stats avg(team_cards) as avg_cards, avg(team_corners) as avg_corners, avg(team_goals) as avg_goals, count as games, sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 by Team | eval percent_under_2_5_goals = (under_2_5_goals / games) * 100, percent_over_2_5_goals = (over_2_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100 | table * | fields Team, games, avg_goals, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent* | eval avg_goals=round(avg_goals,2), avg_corners=round(avg_corners,2), avg_cards=round(avg_cards,2), percent_over_2_5_goals=round(percent_over_2_5_goals,2), percent_under_2_5_goals=round(percent_under_2_5_goals,2), percent_corners_over_8=round(percent_corners_over_8,2), percent_corners_over_9=round(percent_corners_over_9,2), percent_corners_over_10=round(percent_corners_over_10,2), percent_btts_yes=round(percent_btts_yes,2), percent_btts_no=round(percent_btts_no,2), percent_cards_over_3_5=round(percent_cards_over_3_5,2), percent_cards_over_4_5=round(percent_cards_over_4_5,2), percent_cards_over_5_5=round(percent_cards_over_5_5,2), percent_cards_under_3_5=round(percent_cards_under_3_5,2), percent_cards_under_4_5=round(percent_cards_under_4_5,2), percent_cards_under_5_5=round(percent_cards_under_5_5,2) 
+          
+          
+          
+          
+          | append [search index=football_24_25  (HomeTeam="$away_team$" OR AwayTeam="$away_team$") | eval Team="$away_team$"  | fields * | eval team_goals=if(HomeTeam=Team,FTHG,FTAG), team_corners=if(HomeTeam=Team,HC,AC), team_cards=if(HomeTeam=Team,HY+HR,AY+AR), under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR) | stats avg(team_cards) as avg_cards, avg(team_corners) as avg_corners, avg(team_goals) as avg_goals, count as games, sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 by Team | eval percent_under_2_5_goals = (under_2_5_goals / games) * 100, percent_over_2_5_goals = (over_2_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100 | table * | fields Team, games, avg_goals, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent* | eval avg_goals=round(avg_goals,2), avg_corners=round(avg_corners,2), avg_cards=round(avg_cards,2), percent_over_2_5_goals=round(percent_over_2_5_goals,2), percent_under_2_5_goals=round(percent_under_2_5_goals,2), percent_corners_over_8=round(percent_corners_over_8,2), percent_corners_over_9=round(percent_corners_over_9,2), percent_corners_over_10=round(percent_corners_over_10,2), percent_btts_yes=round(percent_btts_yes,2), percent_btts_no=round(percent_btts_no,2), percent_cards_over_3_5=round(percent_cards_over_3_5,2), percent_cards_over_4_5=round(percent_cards_over_4_5,2), percent_cards_over_5_5=round(percent_cards_over_5_5,2), percent_cards_under_3_5=round(percent_cards_under_3_5,2), percent_cards_under_4_5=round(percent_cards_under_4_5,2), percent_cards_under_5_5=round(percent_cards_under_5_5,2)]
+            
+            
+            
+            | fields Team avg* percent_cards* | fields - avg_corners, avg_goals | eval percent_cards_over_3_5=round(percent_cards_over_3_5,2), percent_cards_over_4_5=round(percent_cards_over_4_5,2), percent_cards_over_5_5=round(percent_cards_over_5_5,2), percent_cards_under_3_5=round(percent_cards_under_3_5,2), percent_cards_under_4_5=round(percent_cards_under_4_5,2), percent_cards_under_5_5=round(percent_cards_under_5_5,2)</query>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Cards - $home_team$</title>
+        <search type="annotation" base="base_home_team_search">
+          <query>| eval annotation_label = HomeTeam . ":" . AwayTeam</query>
+        </search>
+        <search base="base_home_team_search">
+          <query>
+           <!-- | eval home_cards=(HY+HR), total_cards=(HY+HR+AY+AR) | timechart max(home_cards) as "$home_team$_cards" max(total_cards) as Total_Cards span=1d-->
+            | eval Total_Cards=HY+HR+AY+AR | eval home_team_cards=IF(HomeTeam="$home_team$",HY+HR,AY+AR) | timechart span=1d max(Total_Cards) as Total_Cards max(home_team_cards) as "$home_team$"_Cards
+          </query>
+        </search>
+        <!--<search base="base_stats_search">
+          <query>| search HomeTeam="$home_team$" AND Date=*2019* | eval home_cards=(HY+HR), total_cards=(HY+HR+AY+AR) | eval temp=split(Date,"/") | eval day=mvindex(temp,0), month=mvindex(temp,1), year=mvindex(temp,2), sortable_date=year . month . day | stats values(total_cards) as total_cards, values(home_cards) as "$home_team$"_cards by sortable_date | sort sortable_date | rename sortable_date as date</query>
+        </search>-->
+        <option name="charting.axisY.scale">log</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Cards - $away_team$</title>
+        <search type="annotation" base="base_away_team_search">
+          <query>| eval annotation_label = HomeTeam . ":" . AwayTeam</query>
+        </search>
+        <search base="base_away_team_search">
+          <query>
+            | eval Total_Cards=HY+HR+AY+AR | eval away_team_cards=IF(HomeTeam="$away_team$",HY+HR,AY+AR) | timechart span=1d max(Total_Cards) as Total_Cards max(away_team_cards) as "$away_team$"_Cards
+          </query>
+        </search>
+        <!--<search base="base_stats_search">
+          <query>| search HomeTeam="$home_team$" AND Date=*2019* | eval home_cards=(HY+HR), total_cards=(HY+HR+AY+AR) | eval temp=split(Date,"/") | eval day=mvindex(temp,0), month=mvindex(temp,1), year=mvindex(temp,2), sortable_date=year . month . day | stats values(total_cards) as total_cards, values(home_cards) as "$home_team$"_cards by sortable_date | sort sortable_date | rename sortable_date as date</query>
+        </search>-->
+        <option name="charting.axisY.scale">log</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Corners - $home_team$ v $away_team$ - Season Analysis</title>
+        <search base="base_home_team_search">
+          <query>
+            
+            | eval team_goals=if(HomeTeam=Team,FTHG,FTAG), team_corners=if(HomeTeam=Team,HC,AC), corners_conceded=if(HomeTeam=Team,AC,HC),team_cards=if(HomeTeam=Team,HY+HR,AY+AR), under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR)
+            
+            | stats avg(team_cards) as avg_cards, avg(team_corners) as avg_corners, avg(corners_conceded) as avg_corners_conceded, avg(team_goals) as avg_goals, count as games, sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 by Team 
+            
+            
+            | eval percent_under_2_5_goals = (under_2_5_goals / games) * 100, percent_over_2_5_goals = (over_2_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100 | table * | fields Team, games, avg_goals, avg_corners*, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent* 
+            
+            | eval avg_goals=round(avg_goals,2), avg_corners=round(avg_corners,2), avg_cards=round(avg_cards,2), percent_over_2_5_goals=round(percent_over_2_5_goals,2), percent_under_2_5_goals=round(percent_under_2_5_goals,2), percent_corners_over_8=round(percent_corners_over_8,2), percent_corners_over_9=round(percent_corners_over_9,2), percent_corners_over_10=round(percent_corners_over_10,2), percent_btts_yes=round(percent_btts_yes,2), percent_btts_no=round(percent_btts_no,2), percent_cards_over_3_5=round(percent_cards_over_3_5,2), percent_cards_over_4_5=round(percent_cards_over_4_5,2), percent_cards_over_5_5=round(percent_cards_over_5_5,2), percent_cards_under_3_5=round(percent_cards_under_3_5,2), percent_cards_under_4_5=round(percent_cards_under_4_5,2), percent_cards_under_5_5=round(percent_cards_under_5_5,2),avg_corners_conceded=round(avg_corners_conceded,3)
+          
+          
+          
+          
+          | append [search index=football_24_25  (HomeTeam="$away_team$" OR AwayTeam="$away_team$") | eval Team="$away_team$"  | fields * | eval team_goals=if(HomeTeam=Team,FTHG,FTAG), team_corners=if(HomeTeam=Team,HC,AC),corners_conceded=if(HomeTeam=Team,AC,HC),team_cards=if(HomeTeam=Team,HY+HR,AY+AR), under_2_5_goals=if(FTHG+FTAG&lt;2.5,1,0), over_2_5_goals=if(FTHG+FTAG&gt;2.5,1,0), btts_yes=if(FTHG&gt;0 AND FTAG &gt;0,1,0), btts_no=if(FTHG==0 OR FTAG==0,1,0), corners_over_10=if(HC+AC&gt;10,1,0), corners_over_9=if(HC+AC&gt;9,1,0), corners_over_8=if(HC+AC&gt;8,1,0), cards_over_3_5=if(HY+HR+AY+AR&gt;3.5,1,0), cards_under_3_5=if(HY+HR+AY+AR&lt;3.5,1,0), cards_over_4_5=if(HY+HR+AY+AR&gt;4.5,1,0), cards_under_4_5=if(HY+HR+AY+AR&lt;4.5,1,0), cards_over_5_5=if(HY+HR+AY+AR&gt;5.5,1,0), cards_under_5_5=if(HY+HR+AY+AR&lt;5.5,1,0), cards_total=(HY+HR) 
+          
+          | stats avg(team_cards) as avg_cards, avg(team_corners) as avg_corners, avg(corners_conceded) as avg_corners_conceded, avg(team_goals) as avg_goals, count as games, sum(under_2_5_goals) as under_2_5_goals, sum(over_2_5_goals) as over_2_5_goals, sum(btts_yes) as btts_yes, sum(btts_no) as btts_no, sum(corners_over_10) as corners_over_10, sum(corners_over_9) as corners_over_9, sum(corners_over_8) as corners_over_8, sum(cards_over_3_5) as cards_over_3_5, sum(cards_under_3_5) as cards_under_3_5, sum(cards_over_4_5) as cards_over_4_5, sum(cards_under_4_5) as cards_under_4_5, sum(cards_over_5_5) as cards_over_5_5, sum(cards_under_5_5) as cards_under_5_5 by Team 
+          
+          | eval percent_under_2_5_goals = (under_2_5_goals / games) * 100, percent_over_2_5_goals = (over_2_5_goals / games) * 100, percent_btts_yes = (btts_yes / games) * 100, percent_btts_no = (btts_no / games) * 100, percent_corners_over_10 = (corners_over_10 / games) * 100, percent_corners_over_9 = (corners_over_9 / games) * 100, percent_corners_over_8 = (corners_over_8 / games) * 100, percent_cards_over_3_5 = (cards_over_3_5 / games) * 100, percent_cards_under_3_5 = (cards_under_3_5 / games) * 100, percent_cards_over_4_5 = (cards_over_4_5 / games) * 100, percent_cards_under_4_5 = (cards_under_4_5 / games) * 100, percent_cards_over_5_5 = (cards_over_5_5 / games) * 100, percent_cards_under_5_5 = (cards_under_5_5 / games) * 100 | table * | fields Team, games, avg_goals, avg_corners*, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent* 
+          
+          | eval avg_goals=round(avg_goals,2), avg_corners=round(avg_corners,2), avg_cards=round(avg_cards,2), percent_over_2_5_goals=round(percent_over_2_5_goals,2), percent_under_2_5_goals=round(percent_under_2_5_goals,2), percent_corners_over_8=round(percent_corners_over_8,2), percent_corners_over_9=round(percent_corners_over_9,2), percent_corners_over_10=round(percent_corners_over_10,2), percent_btts_yes=round(percent_btts_yes,2), percent_btts_no=round(percent_btts_no,2), percent_cards_over_3_5=round(percent_cards_over_3_5,2), percent_cards_over_4_5=round(percent_cards_over_4_5,2), percent_cards_over_5_5=round(percent_cards_over_5_5,2), percent_cards_under_3_5=round(percent_cards_under_3_5,2), percent_cards_under_4_5=round(percent_cards_under_4_5,2), percent_cards_under_5_5=round(percent_cards_under_5_5,2),avg_corners_conceded=round(avg_corners_conceded,3)]
+            
+            
+            
+            | fields Team avg* percent_corners* | fields - avg_cards, avg_goals | eval percent_corners_over_8=round(percent_corners_over_8,2), percent_corners_over_9=round(percent_corners_over_9,2), percent_corners_over_10=round(percent_corners_over_10,2)</query>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Corners - $home_team$</title>
+        <search type="annotation" base="base_home_team_search">
+          <query>| eval annotation_label = HomeTeam . ":" . AwayTeam</query>
+        </search>
+        <search base="base_home_team_search">
+          <query>
+            | eval Total_Corners=HC+AC | eval home_team_corners=IF(HomeTeam="$home_team$",HC,AC) | timechart span=1d max(Total_Corners) as Total_Corners max(home_team_corners) as "$home_team$"_Corners
+          </query>
+        </search>
+        <option name="charting.axisY.scale">log</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Corners - $away_team$</title>
+        <search type="annotation" base="base_away_team_search">
+          <query>| eval annotation_label = HomeTeam . ":" . AwayTeam</query>
+        </search>
+        <search base="base_away_team_search">
+          <query>
+            | eval Total_Corners=HC+AC | eval away_team_corners=IF(HomeTeam="$away_team$",HC,AC) | timechart span=1d max(Total_Corners) as Total_Corners max(away_team_corners) as "$away_team$"_Corners
+          </query>
+        </search>
+        <option name="charting.axisY.scale">log</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <h1>Compound Average Percentages - Home/Away - Stats for team using home or away data</h1>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>BTTS - Home/Away Analysis</title>
         <search base="base_h2h_search">
           <query>| stats avg(percent_btts_no) as avg_btts_no, avg(percent_btts_yes) as avg_btts_yes | eval avg_btts_no=round(avg_btts_no,2), avg_btts_yes=round(avg_btts_yes,2)</query>
         </search>
@@ -113,7 +619,35 @@
   <row>
     <panel>
       <table>
-        <title>Cards</title>
+        <title>Goals - Home/Away Analysis</title>
+        <search base="base_h2h_search">
+          <query>| stats avg(percent_under_1_5_goals) as avg_goals_under_1_5, avg(percent_over_1_5_goals) as avg_goals_over_1_5,     avg(percent_under_2_5_goals) as avg_goals_under_2_5, avg(percent_over_2_5_goals) as avg_goals_over_2_5,   avg(percent_under_3_5_goals) as avg_goals_under_3_5, avg(percent_over_3_5_goals) as avg_goals_over_3_5  | eval avg_goals_under_1_5=round(avg_goals_under_1_5,2), avg_goals_over_1_5=round(avg_goals_over_1_5,2),     avg_goals_under_2_5=round(avg_goals_under_2_5,2), avg_goals_over_2_5=round(avg_goals_over_2_5,2),   avg_goals_under_3_5=round(avg_goals_under_3_5,2), avg_goals_over_3_5=round(avg_goals_over_3_5,2)</query>
+        </search>
+        <format type="color" field="avg_goals_under_2_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_goals_over_2_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_goals_under_1_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_goals_over_1_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_goals_under_3_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+        <format type="color" field="avg_goals_over_3_5">
+          <colorPalette type="expression">if (value &gt; 80, "#65A637", "#ffffff")</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Cards - Home/Away Analysis</title>
         <search base="base_h2h_search">
           <query>| stats avg(percent_cards_over_3_5) as avg_cards_over_3_5, avg(percent_cards_under_3_5) as avg_cards_under_3_5, avg(percent_cards_over_4_5) as avg_cards_over_4_5, avg(percent_cards_under_4_5) as avg_cards_under_4_5, avg(percent_cards_over_5_5) as avg_cards_over_5_5, avg(percent_cards_under_5_5) as avg_cards_under_5_5 | eval avg_cards_over_3_5=round(avg_cards_over_3_5,2), avg_cards_under_3_5=round(avg_cards_under_3_5,2), avg_cards_over_4_5=round(avg_cards_over_4_5,2), avg_cards_under_4_5=round(avg_cards_under_4_5,2), avg_cards_over_5_5=round(avg_cards_over_5_5,2), avg_cards_under_5_5=round(avg_cards_under_5_5,2)</query>
         </search>
@@ -141,7 +675,7 @@
   <row>
     <panel>
       <table>
-        <title>Corners</title>
+        <title>Corners - Home/Away Analysis</title>
         <search base="base_h2h_search">
           <query>| stats avg(percent_corners_over_8) as avg_corners_over_8, avg(percent_corners_over_9) as avg_corners_over_9, avg(percent_corners_over_10) as avg_corners_over_10 | eval avg_corners_over_8=round(avg_corners_over_8,2), avg_corners_over_9=round(avg_corners_over_9,2), avg_corners_over_10=round(avg_corners_over_10,2)</query>
         </search>
@@ -160,9 +694,9 @@
   <row>
     <panel>
       <table>
-        <title>Statistics - $home_team$ v $away_team$</title>
+        <title>Statistics - $home_team$ v $away_team$ - Home/Away Analysis</title>
         <search base="base_h2h_search">
-          <query>| table * | fields Team, games, avg_goals, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent* | eval avg_goals=round(avg_goals,2), avg_corners=round(avg_corners,2), avg_cards=round(avg_cards,2), percent_over_2_5_goals=round(percent_over_2_5_goals,2), percent_under_2_5_goals=round(percent_under_2_5_goals,2), percent_corners_over_8=round(percent_corners_over_8,2), percent_corners_over_9=round(percent_corners_over_9,2), percent_corners_over_10=round(percent_corners_over_10,2), percent_btts_yes=round(percent_btts_yes,2), percent_btts_no=round(percent_btts_no,2), percent_cards_over_3_5=round(percent_cards_over_3_5,2), percent_cards_over_4_5=round(percent_cards_over_4_5,2), percent_cards_over_5_5=round(percent_cards_over_5_5,2), percent_cards_under_3_5=round(percent_cards_under_3_5,2), percent_cards_under_4_5=round(percent_cards_under_4_5,2), percent_cards_under_5_5=round(percent_cards_under_5_5,2)</query>
+          <query>| table * | fields Team, games, avg_goals, avg_corners, avg_cards, *goals*, *corners*, *btts*, *cards*, *percent* | eval avg_goals=round(avg_goals,2), avg_corners=round(avg_corners,2), avg_cards=round(avg_cards,2), percent_over_2_5_goals=round(percent_over_2_5_goals,2), percent_under_2_5_goals=round(percent_under_2_5_goals,2), percent_corners_over_8=round(percent_corners_over_8,2), percent_corners_over_9=round(percent_corners_over_9,2), percent_corners_over_10=round(percent_corners_over_10,2), percent_btts_yes=round(percent_btts_yes,2), percent_btts_no=round(percent_btts_no,2), percent_cards_over_3_5=round(percent_cards_over_3_5,2), percent_cards_over_4_5=round(percent_cards_over_4_5,2), percent_cards_over_5_5=round(percent_cards_over_5_5,2), percent_cards_under_3_5=round(percent_cards_under_3_5,2), percent_cards_under_4_5=round(percent_cards_under_4_5,2), percent_cards_under_5_5=round(percent_cards_under_5_5,2), avg_ht_goals_conceded=round(avg_ht_goals_conceded,3), avg_ht_goals_scored=round(avg_ht_goals_scored,3),percent_over_1_5_goals=round(percent_over_1_5_goals,2), percent_under_1_5_goals=round(percent_under_1_5_goals,2),percent_over_3_5_goals=round(percent_over_3_5_goals,2), percent_under_3_5_goals=round(percent_under_3_5_goals,2), avg_corners_conceded=round(avg_corners_conceded,3) </query>
         </search>
       </table>
     </panel>
@@ -170,9 +704,9 @@
   <row>
     <panel>
       <table>
-        <title>Goals - Over/Under 2.5</title>
+        <title>Goals - Over/Under 2.5 - Home/Away Analysis</title>
         <search base="base_h2h_search">
-          <query>| fields Team avg* percent*goals | fields - avg_corners, avg_cards | eval avg_goals=round(avg_goals,2), percent_over_2_5_goals=round(percent_over_2_5_goals,2), percent_under_2_5_goals=round(percent_under_2_5_goals,2)</query>
+          <query>| fields Team avg* percent*goals | fields - avg_corners*, avg_cards | eval avg_goals=round(avg_goals,2), avg_corners=round(avg_corners,2), avg_cards=round(avg_cards,2), percent_over_2_5_goals=round(percent_over_2_5_goals,2), percent_under_2_5_goals=round(percent_under_2_5_goals,2), percent_corners_over_8=round(percent_corners_over_8,2), percent_corners_over_9=round(percent_corners_over_9,2), percent_corners_over_10=round(percent_corners_over_10,2), percent_btts_yes=round(percent_btts_yes,2), percent_btts_no=round(percent_btts_no,2), percent_cards_over_3_5=round(percent_cards_over_3_5,2), percent_cards_over_4_5=round(percent_cards_over_4_5,2), percent_cards_over_5_5=round(percent_cards_over_5_5,2), percent_cards_under_3_5=round(percent_cards_under_3_5,2), percent_cards_under_4_5=round(percent_cards_under_4_5,2), percent_cards_under_5_5=round(percent_cards_under_5_5,2), avg_ht_goals_conceded=round(avg_ht_goals_conceded,3), avg_ht_goals_scored=round(avg_ht_goals_scored,3),percent_over_1_5_goals=round(percent_over_1_5_goals,2), percent_under_1_5_goals=round(percent_under_1_5_goals,2),percent_over_3_5_goals=round(percent_over_3_5_goals,2), percent_under_3_5_goals=round(percent_under_3_5_goals,2), avg_corners_conceded=round(avg_corners_conceded,3)  </query>
         </search>
         <option name="percentagesRow">false</option>
         <option name="totalsRow">false</option>
@@ -183,13 +717,13 @@
     <panel>
       <chart>
         <title>Goals - $home_team$</title>
+        <search type="annotation" base="charts_search">
+          <query>| search HomeTeam="$home_team$" | eval annotation_label = AwayTeam</query>
+        </search>
         <search base="charts_search">
           <query>
             | search HomeTeam="$home_team$" | eval "$home_team$_Goals"=FTHG | eval Total_Goals=FTHG+FTAG | timechart max("$home_team$_Goals") as "$home_team$_Goals" max(Total_Goals) as Total_Goals span=1d
           </query>
-        </search>
-        <search type="annotation" base="charts_search">
-          <query>| search HomeTeam="$home_team$" | eval annotation_label = AwayTeam</query>
         </search>
         <option name="charting.chart">line</option>
         <option name="charting.chart.nullValueMode">connect</option>
@@ -199,13 +733,13 @@
     <panel>
       <chart>
         <title>Goals - $away_team$</title>
+        <search type="annotation" base="charts_search">
+          <query>| search AwayTeam="$away_team$" | eval annotation_label = HomeTeam</query>
+        </search>
         <search base="charts_search">
           <query>
             | search AwayTeam="$away_team$" | eval "$away_team$_Goals"=FTAG | eval Total_Goals=FTHG+FTAG | timechart max("$away_team$_Goals") as "$away_team$_Goals" max(Total_Goals) as Total_Goals span=1d
           </query>
-        </search>
-        <search type="annotation" base="charts_search">
-          <query>| search AwayTeam="$away_team$" | eval annotation_label = HomeTeam</query>
         </search>
         <option name="charting.chart">line</option>
         <option name="charting.chart.nullValueMode">connect</option>
@@ -216,9 +750,9 @@
   <row>
     <panel>
       <table>
-        <title>BTTS</title>
+        <title>BTTS - Home/Away Analysis</title>
         <search base="base_h2h_search">
-          <query>| fields Team avg* percent_btts* | fields - avg_cards, avg_corners | eval avg_goals=round(avg_goals,2), percent_btts_yes=round(percent_btts_yes,2), percent_btts_no=round(percent_btts_no,2)</query>
+          <query>| fields Team avg* percent_btts* | fields - avg_cards, avg_corners* | eval avg_goals=round(avg_goals,2), avg_corners=round(avg_corners,2), avg_cards=round(avg_cards,2), percent_over_2_5_goals=round(percent_over_2_5_goals,2), percent_under_2_5_goals=round(percent_under_2_5_goals,2), percent_corners_over_8=round(percent_corners_over_8,2), percent_corners_over_9=round(percent_corners_over_9,2), percent_corners_over_10=round(percent_corners_over_10,2), percent_btts_yes=round(percent_btts_yes,2), percent_btts_no=round(percent_btts_no,2), percent_cards_over_3_5=round(percent_cards_over_3_5,2), percent_cards_over_4_5=round(percent_cards_over_4_5,2), percent_cards_over_5_5=round(percent_cards_over_5_5,2), percent_cards_under_3_5=round(percent_cards_under_3_5,2), percent_cards_under_4_5=round(percent_cards_under_4_5,2), percent_cards_under_5_5=round(percent_cards_under_5_5,2), avg_ht_goals_conceded=round(avg_ht_goals_conceded,3), avg_ht_goals_scored=round(avg_ht_goals_scored,3),percent_over_1_5_goals=round(percent_over_1_5_goals,2), percent_under_1_5_goals=round(percent_under_1_5_goals,2),percent_over_3_5_goals=round(percent_over_3_5_goals,2), percent_under_3_5_goals=round(percent_under_3_5_goals,2), avg_corners_conceded=round(avg_corners_conceded,3)</query>
         </search>
       </table>
     </panel>
@@ -227,13 +761,13 @@
     <panel>
       <chart>
         <title>BTTS - $home_team$</title>
+        <search type="annotation" base="charts_search">
+          <query>| search HomeTeam="$home_team$" | eval annotation_label = AwayTeam</query>
+        </search>
         <search base="charts_search">
           <query>
             | search HomeTeam="$home_team$" | eval btts=if(FTHG&gt;0 AND FTAG&gt;0,100,0) | timechart max(btts) as BTTS span=1d
           </query>
-        </search>
-        <search type="annotation" base="charts_search">
-          <query>| search HomeTeam="$home_team$" | eval annotation_label = AwayTeam</query>
         </search>
         <!--<search base="base_stats_search">
           <query>| search HomeTeam="$home_team$" AND Date=*2019* | eval btts=if(FTHG&gt;0 AND FTAG&gt;0,100,0) | eval temp=split(Date,"/") | eval day=mvindex(temp,0), month=mvindex(temp,1), year=mvindex(temp,2), sortable_date=year . month . day | stats values(btts) as BTTS by sortable_date | sort sortable_date | rename sortable_date as date</query>
@@ -246,13 +780,13 @@
     <panel>
       <chart>
         <title>BTTS - $away_team$</title>
+        <search type="annotation" base="charts_search">
+          <query>| search AwayTeam="$away_team$" | eval annotation_label = HomeTeam</query>
+        </search>
         <search base="charts_search">
           <query>
             | search AwayTeam="$away_team$" | eval btts=if(FTHG&gt;0 AND FTAG&gt;0,100,0) | timechart max(btts) as BTTS span=1d
           </query>
-        </search>
-        <search type="annotation" base="charts_search">
-          <query>| search AwayTeam="$away_team$" | eval annotation_label = HomeTeam</query>
         </search>
         <!--<search base="base_stats_search">
           <query>| search AwayTeam="$away_team$" AND Date=*2019* | eval btts=if(FTHG&gt;0 AND FTAG&gt;0,100,0) | eval temp=split(Date,"/") | eval day=mvindex(temp,0), month=mvindex(temp,1), year=mvindex(temp,2), sortable_date=year . month . day | stats values(btts) as BTTS by sortable_date | sort sortable_date | rename sortable_date as date</query>
@@ -266,9 +800,9 @@
   <row>
     <panel>
       <table>
-        <title>Cards</title>
+        <title>Cards - Home/Away Analysis</title>
         <search base="base_h2h_search">
-          <query>| fields Team avg* percent_cards* | fields - avg_corners, avg_goals | eval percent_cards_over_3_5=round(percent_cards_over_3_5,2), percent_cards_over_4_5=round(percent_cards_over_4_5,2), percent_cards_over_5_5=round(percent_cards_over_5_5,2), percent_cards_under_3_5=round(percent_cards_under_3_5,2), percent_cards_under_4_5=round(percent_cards_under_4_5,2), percent_cards_under_5_5=round(percent_cards_under_5_5,2)</query>
+          <query>| fields Team avg* percent_cards* | fields - avg_corners*, avg_goals*, avg_ht* | eval avg_goals=round(avg_goals,2), avg_corners=round(avg_corners,2), avg_cards=round(avg_cards,2), percent_over_2_5_goals=round(percent_over_2_5_goals,2), percent_under_2_5_goals=round(percent_under_2_5_goals,2), percent_corners_over_8=round(percent_corners_over_8,2), percent_corners_over_9=round(percent_corners_over_9,2), percent_corners_over_10=round(percent_corners_over_10,2), percent_btts_yes=round(percent_btts_yes,2), percent_btts_no=round(percent_btts_no,2), percent_cards_over_3_5=round(percent_cards_over_3_5,2), percent_cards_over_4_5=round(percent_cards_over_4_5,2), percent_cards_over_5_5=round(percent_cards_over_5_5,2), percent_cards_under_3_5=round(percent_cards_under_3_5,2), percent_cards_under_4_5=round(percent_cards_under_4_5,2), percent_cards_under_5_5=round(percent_cards_under_5_5,2), avg_ht_goals_conceded=round(avg_ht_goals_conceded,3), avg_ht_goals_scored=round(avg_ht_goals_scored,3),percent_over_1_5_goals=round(percent_over_1_5_goals,2), percent_under_1_5_goals=round(percent_under_1_5_goals,2),percent_over_3_5_goals=round(percent_over_3_5_goals,2), percent_under_3_5_goals=round(percent_under_3_5_goals,2), avg_corners_conceded=round(avg_corners_conceded,3)</query>
         </search>
       </table>
     </panel>
@@ -277,13 +811,13 @@
     <panel>
       <chart>
         <title>Cards - $home_team$</title>
+        <search type="annotation" base="charts_search">
+          <query>| search HomeTeam="$home_team$" | eval annotation_label = AwayTeam</query>
+        </search>
         <search base="charts_search">
           <query>
             | search HomeTeam="$home_team$" | eval home_cards=(HY+HR), total_cards=(HY+HR+AY+AR) | timechart max(home_cards) as "$home_team$_cards" max(total_cards) as Total_Cards span=1d
           </query>
-        </search>
-        <search type="annotation" base="charts_search">
-          <query>| search HomeTeam="$home_team$" | eval annotation_label = AwayTeam</query>
         </search>
         <!--<search base="base_stats_search">
           <query>| search HomeTeam="$home_team$" AND Date=*2019* | eval home_cards=(HY+HR), total_cards=(HY+HR+AY+AR) | eval temp=split(Date,"/") | eval day=mvindex(temp,0), month=mvindex(temp,1), year=mvindex(temp,2), sortable_date=year . month . day | stats values(total_cards) as total_cards, values(home_cards) as "$home_team$"_cards by sortable_date | sort sortable_date | rename sortable_date as date</query>
@@ -296,13 +830,13 @@
     <panel>
       <chart>
         <title>Cards - $away_team$</title>
+        <search type="annotation" base="charts_search">
+          <query>| search AwayTeam="$away_team$" | eval annotation_label = HomeTeam</query>
+        </search>
         <search base="charts_search">
           <query>
             | search AwayTeam="$away_team$" | eval away_cards=(AY+AR), total_cards=(HY+HR+AY+AR) | timechart max(away_cards) as "$away_team$_cards" max(total_cards) as Total_Cards span=1d
           </query>
-        </search>
-        <search type="annotation" base="charts_search">
-          <query>| search AwayTeam="$away_team$" | eval annotation_label = HomeTeam</query>
         </search>
         <!--<search base="base_stats_search">
           <query>| search HomeTeam="$home_team$" AND Date=*2019* | eval home_cards=(HY+HR), total_cards=(HY+HR+AY+AR) | eval temp=split(Date,"/") | eval day=mvindex(temp,0), month=mvindex(temp,1), year=mvindex(temp,2), sortable_date=year . month . day | stats values(total_cards) as total_cards, values(home_cards) as "$home_team$"_cards by sortable_date | sort sortable_date | rename sortable_date as date</query>
@@ -316,9 +850,9 @@
   <row>
     <panel>
       <table>
-        <title>Corners</title>
+        <title>Corners - Home/Away Analysis</title>
         <search base="base_h2h_search">
-          <query>| fields Team avg* percent_corners* | fields - avg_cards, avg_goals | eval percent_corners_over_8=round(percent_corners_over_8,2), percent_corners_over_9=round(percent_corners_over_9,2), percent_corners_over_10=round(percent_corners_over_10,2)</query>
+          <query>| fields Team avg* percent_corners* | fields - avg_cards, avg*goals* | eval avg_goals=round(avg_goals,2), avg_corners=round(avg_corners,2), avg_cards=round(avg_cards,2), percent_over_2_5_goals=round(percent_over_2_5_goals,2), percent_under_2_5_goals=round(percent_under_2_5_goals,2), percent_corners_over_8=round(percent_corners_over_8,2), percent_corners_over_9=round(percent_corners_over_9,2), percent_corners_over_10=round(percent_corners_over_10,2), percent_btts_yes=round(percent_btts_yes,2), percent_btts_no=round(percent_btts_no,2), percent_cards_over_3_5=round(percent_cards_over_3_5,2), percent_cards_over_4_5=round(percent_cards_over_4_5,2), percent_cards_over_5_5=round(percent_cards_over_5_5,2), percent_cards_under_3_5=round(percent_cards_under_3_5,2), percent_cards_under_4_5=round(percent_cards_under_4_5,2), percent_cards_under_5_5=round(percent_cards_under_5_5,2), avg_ht_goals_conceded=round(avg_ht_goals_conceded,3), avg_ht_goals_scored=round(avg_ht_goals_scored,3),percent_over_1_5_goals=round(percent_over_1_5_goals,2), percent_under_1_5_goals=round(percent_under_1_5_goals,2),percent_over_3_5_goals=round(percent_over_3_5_goals,2), percent_under_3_5_goals=round(percent_under_3_5_goals,2), avg_corners_conceded=round(avg_corners_conceded,3)</query>
         </search>
       </table>
     </panel>
@@ -327,13 +861,13 @@
     <panel>
       <chart>
         <title>Corners - $home_team$</title>
+        <search type="annotation" base="charts_search">
+          <query>| search HomeTeam="$home_team$" | eval annotation_label = AwayTeam</query>
+        </search>
         <search base="charts_search">
           <query>
             | search HomeTeam="$home_team$" | eval home_corners=(HC), total_corners=(HC+AC) | timechart max(home_corners) as "$home_team$_corners" max(total_corners) as Total_Corners span=1d
           </query>
-        </search>
-        <search type="annotation" base="charts_search">
-          <query>| search HomeTeam="$home_team$" | eval annotation_label = AwayTeam</query>
         </search>
         <!--<search base="base_stats_search">
           <query>| search HomeTeam="$home_team$" AND Date=*2019* | eval home_corners=(HC), total_corners=(HC+AC) | eval temp=split(Date,"/") | eval day=mvindex(temp,0), month=mvindex(temp,1), year=mvindex(temp,2), sortable_date=year . month . day | stats values(total_corners) as total_corners, values(home_corners) as "$home_team$"_corners by sortable_date | sort sortable_date | rename sortable_date as date</query>
@@ -351,13 +885,13 @@
     <panel>
       <chart>
         <title>Corners - $away_team$</title>
+        <search type="annotation" base="charts_search">
+          <query>| search AwayTeam="$away_team$" | eval annotation_label = HomeTeam</query>
+        </search>
         <search base="charts_search">
           <query>
             | search AwayTeam="$away_team$" | eval away_corners=(AC), total_corners=(HC+AC) | timechart max(away_corners) as "$away_team$_corners" max(total_corners) as Total_Corners span=1d
           </query>
-        </search>
-        <search type="annotation" base="charts_search">
-          <query>| search AwayTeam="$away_team$" | eval annotation_label = HomeTeam</query>
         </search>
         <!--<search base="base_stats_search">
           <query>| search AwayTeam="$away_team$" AND Date=*2019* | eval away_corners=(AC), total_corners=(HC+AC) | eval temp=split(Date,"/") | eval day=mvindex(temp,0), month=mvindex(temp,1), year=mvindex(temp,2), sortable_date=year . month . day | stats values(total_corners) as total_corners, values(away_corners) as "$away_team$"_corners by sortable_date | sort sortable_date | rename sortable_date as date</query>
